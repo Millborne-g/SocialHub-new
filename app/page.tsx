@@ -19,4 +19,6 @@ export default function Home() {
       <HeroSection />
     </main>
   )
+
+  
 }
