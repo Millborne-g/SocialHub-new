@@ -1,0 +1,110 @@
+
+/* signup */
+.signUpContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10% 0 10% 0;
+  }
+  
+  .signUpContainer-inner{
+    width: 400px;
+  }
+  
+  .logoSignup-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo-signup{
+    margin-bottom: 30px;
+  }
+  
+  .createAnAccount-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .createAnAccount{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 100%;
+    /* identical to box height, or 28px */
+  
+    display: flex;
+    align-items: center;
+  
+    /* text/primary */
+  
+    color: #101012;
+  }
+  
+  .signUpLabel{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+  
+    color: #5A5A5D;
+    margin-bottom: 3px;
+  }
+  
+  .textFields{
+    margin-bottom: 13px;
+  }
+  
+  .signUpPageBtn{
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .googleIcon{
+    height: 15px;
+    margin-right: 5px;
+  }
+  
+  .alreadyHaveAnAccount-container{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .alreadyHaveAnAccount-text{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    /* identical to box height, or 17px */
+  
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+  
+    /* text/tertiary */
+  
+    color: #BEBEBF;
+  
+  
+  }
+  
+  .alreadyHaveAnAccount-logIntext{
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+  
+    margin-left: 5px;
+    /* text/tertiary */
+  }
+  
+  
