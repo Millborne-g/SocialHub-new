@@ -25,7 +25,7 @@ export default function HeroSection() {
                                 <div className='buttonContainer'>
                                     <div className="input-group mb-3 buttonContainer-inner">
                                         <input type="text" className="form-control emailInput" placeholder="Enter your email..." aria-label="Recipient's username" aria-describedby="button-addon2" value={emailAdd} onChange={(e) => setEmailAdd(e.target.value)}/>
-                                        <Link className="emailInputBtn" href='/signup'><span> Sign up <FontAwesomeIcon className='arrowIcon' icon={faArrowRight} /></span></Link>
+                                        <Link className="emailInputBtn" href="/signup"><span> Sign up <FontAwesomeIcon className='arrowIcon' icon={faArrowRight} /></span></Link>
                                     </div>
                                 </div>
                             </div>

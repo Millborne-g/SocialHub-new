@@ -60,6 +60,15 @@
   .textFields{
     margin-bottom: 13px;
   }
+
+  .invalid-confirm-password{
+    width: 100%;
+    text-align: center;
+    background-color: #D83742;
+    color: #ffff;
+    border-radius: 5px;
+    margin-top: 2px;
+  }
   
   .signUpPageBtn{
     width: 100%;
