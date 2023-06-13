@@ -1,29 +1,24 @@
+.logInCard{
+    padding: 40px 35px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+}
 
-/* signup */
-.signUpContainer{
-    width: 100%;
+.navbarLogin{
+    padding: 40px 0;
+    margin-bottom: 55px;
+}
+
+.logoImg{
+    height: 50px;
+}
+
+.loginCointainer{
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 100px 0;
-  }
-  
-  .signUpContainer-inner{
-    width: 400px;
-  }
-  
-  .logoSignup-container{
-    width: 100%;
-    display: flex;
     align-items: center;
-    justify-content: center;
-  }
-  
-  .logo-signup{
-    margin-bottom: 30px;
-  }
-  
-  .createAnAccount-container{
+}
+
+.login-container{
     width: 100%;
     display: flex;
     align-items: center;
@@ -31,7 +26,17 @@
     margin-bottom: 30px;
   }
   
-  .createAnAccount{
+  .logInLabel{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+  
+    color: #5A5A5D;
+    margin-bottom: 3px;
+  }
+
+  .loginContainerText{
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 800;
@@ -46,31 +51,13 @@
   
     color: #101012;
   }
-  
-  .signUpLabel{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-  
-    color: #5A5A5D;
-    margin-bottom: 3px;
-  }
-  
-  .textFieldsSignUp{
+
+  .textFields{
+    width: 350px;
     margin-bottom: 13px;
   }
 
-  .invalid-confirm-password{
-    width: 100%;
-    text-align: center;
-    background-color: #D83742;
-    color: #ffff;
-    border-radius: 5px;
-    margin-top: 2px;
-  }
-  
-  .signUpPageBtn{
+  .logInPageBtn{
     width: 100%;
     margin-bottom: 15px;
   }
@@ -79,13 +66,13 @@
     height: 15px;
     margin-right: 5px;
   }
-  
-  .alreadyHaveAnAccount-container{
+
+  .dontHaveAnAccount-container{
     display: flex;
     justify-content: center;
   }
   
-  .alreadyHaveAnAccount-text{
+  .dontHaveAnAccount-text{
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -104,7 +91,7 @@
   
   }
   
-  .alreadyHaveAnAccount-logIntext{
+  .dontHaveAnAccount-logIntext{
     text-decoration: none;
     font-family: 'Roboto';
     font-style: normal;
@@ -116,6 +103,7 @@
     /* text/tertiary */
   }
 
+  /* loader */
   .popup{
     position: fixed;
     width: 100%;
@@ -153,61 +141,3 @@
     border-radius: 10px;
     box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
   }
-
-  .success{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 1;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    padding: 2% 3%;
-    box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
-  }
-
-  .successIcon{
-    width: 79px;
-    height: 79px;
-    margin-bottom: 20px;
-  }
-
-  .congratulationsText {
-    margin-bottom: 20px;
-  }
-
-  .congratulationsText span {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 38px;
-    text-align: center;
-
-    color: #44C4A1;
-  }
-
-  .thankYouText {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-
-    color: #000000;
-  }
-
-  .socialHubText{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 900;
-    font-size: 20px;
-
-    color: #000000;
-  }
-
-  /* confetti */
-  
-  
-  

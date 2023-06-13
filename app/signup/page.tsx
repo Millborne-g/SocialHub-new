@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ModalSuccessful from '../components/ModalSuccessful';
 import { LineWave } from  'react-loader-spinner'
 import check from '../../assets/check.svg';
+import head from './head';
 
 type ResponseType = {
   credential?: string;
@@ -40,8 +41,10 @@ export default function page() {
   const [toastText,setToastText] = useState("Email already exist!");
   const [signUpLoader, setSignUpLoader] = useState(false);
   const [signUpSuccessfulModal, setSignUpSuccessfulModal] = useState(false);
+  const [clickSignIn, setClickSignIn] = useState(false);
 
   const { data } = useSession();
+  
   const customIdPassword = "custom-id-password";
   const customIdAlreadyExist = "custom-id-AlreadyExist";
   const notify = () => toast.error(toastText, {
@@ -54,7 +57,7 @@ export default function page() {
     progress: undefined,
     theme: "light",
     toastId: customIdPassword
-    });
+  });
 
   // const notifyAlreadyExist = () => toast.error('EmailAlreadyExist', {
   //     position: "top-center",
@@ -91,7 +94,14 @@ export default function page() {
 
   useEffect(() =>{
     setName(fName+' '+lName);
-  },[fName, lName])
+  },[fName, lName]);
+
+  useEffect(() => {
+    if (toastConfirmPassword) {
+      notify();
+      setClickSignIn(false);
+    }
+  }, [clickSignIn, toastText]);
 
   // const emailT = data?.user?.email ?? "No email available";
   // console.log(emailT);
@@ -109,6 +119,7 @@ export default function page() {
       console.log('fullname '+ name);
       let nameSplit = name.split(' ')[0];
       if (email !== ''){
+        // loadDB
         onValue(ref(db, `/users`), (snapshot) => {
           const data = snapshot.val();
           if (data !== null) {
@@ -119,7 +130,7 @@ export default function page() {
                 let userEmail = (user as { email?: string }).email;
                 if (userEmail === email){
                   emailExist=true;
-                  // setToastText("Email already exist!")
+                  setToastText("Email already exist!")
                   console.log(emailExist)
                   
                 }
@@ -177,6 +188,7 @@ export default function page() {
 
   const signUp = (e: any) => {
     e.preventDefault();
+    setClickSignIn(true);
     if( fName !=='' && lName !=='' && password !=='' && confirmPassword !==''){
       if (password === confirmPassword){
         setToastConfirmPassword(false);
@@ -187,10 +199,10 @@ export default function page() {
         // setToastText('Passwords do not match');
         confirmPasswordElement?.classList.add('is-invalid');
         // alert('Password Don`t Match');
-        // setToastText("Passwords do not match.")
+        setToastText("Passwords don't match.")
         setConfirmPassword('');
-        setPasswordDontMatch(true)
-        // setToastConfirmPassword(true)
+        // setPasswordDontMatch(true)
+        setToastConfirmPassword(true)
       }
     } else {
       setPasswordDontMatch(false)
@@ -251,52 +263,35 @@ export default function page() {
 
           <form onSubmit={(e) => {signUp(e)}}>
             <div className="row">
-              <div className="col-6 textFields">
+              <div className="col-6 textFieldsSignUp">
                 <label htmlFor="firstName" className='signUpLabel'>First name</label>
                 <input type="text" className="form-control" id="firstName" placeholder="First name" value={fName} onChange={(e) => setFName(e.target.value)} required />
               </div>
-              <div className="col-6 textFields">
+              <div className="col-6 textFieldsSignUp">
                 <label htmlFor="lastName" className='signUpLabel'>Last name</label>
                 <input type="text" className="form-control" id="lastName" placeholder="Last name" value={lName} onChange={(e) => setLName(e.target.value)} required />
               </div>
             </div>
-            <div className="form-group textFields">
+            <div className="form-group textFieldsSignUp">
               <label htmlFor="inputEmail" className='signUpLabel'>Email address</label>
               <input type="email" className="form-control  inputUserEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={(e) => {setEmail(e.target.value); inputUserEmailElement?.classList.remove('is-invalid'); setToastConfirmPassword(false) }} required/>
             
             </div>
-            <div className="form-group textFields">
+            <div className="form-group textFieldsSignUp">
               <label htmlFor="inputPassword" className='signUpLabel'>Password</label>
               <input type="password" className="form-control" id="inputPassword" placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} required/>
             </div>
 
-            <div className="form-group textFields">
+            <div className="form-group textFieldsSignUp">
               <label htmlFor="inputConfirmPassword" className='signUpLabel'>Confirm Password</label>
               <input type="password" className="form-control confirm-password" id="inputConfirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value); confirmPasswordElement?.classList.remove('is-invalid'); setToastConfirmPassword(false);setPasswordDontMatch(false); }} required/>
-              { passwordDontMatch &&
-                <div className="invalid-confirm-password">
-                Password do not match
-                </div>
-              }
-              
             </div>
             
-            <button type="submit" className="btn btn-primary signUpPageBtn" onClick={notify}>Sign up</button>
+            <button type="submit" className="btn btn-primary signUpPageBtn">Sign up</button>
             <button type="button" className="btn btn-outline-secondary signUpPageBtn googleSignUpPageBtn" onClick={() => {signIn('google');}}> <img className='googleIcon' src={googleIcon.src}/> <span className='google'>Continue with Google</span></button>
             { toastConfirmPassword &&
                 // <ToastContainer containerId={customIdPassword} />
-                <ToastContainer
-                  position="top-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                  />
+                <ToastContainer/>
             }
 
             {/* {toastAlreadyExist &&
