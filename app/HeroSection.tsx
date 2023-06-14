@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+"use client"
+
+import React, { createContext, useEffect, useState } from 'react';
+
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +12,9 @@ import Link from 'next/link';
 export let emailAddValue = '';
 
 export default function HeroSection() {
-
+    useEffect(() => {
+        document.title = 'SocialHub';
+      }, []);
     const [emailAdd, setEmailAdd]= useState('')
     emailAddValue = emailAdd;
     return (

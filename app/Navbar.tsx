@@ -32,7 +32,7 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul className="navbar-nav">
                       <li className="nav-item">
-                        <span className="nav-link"><Link className='navlogin' href="/login">Login</Link></span>
+                        <span className="nav-link"><Link className='navlogin' href="/login">Log in</Link></span>
                       </li>
                       <li className="nav-item">
                         <Link type="button" className="btn btn-primary" href="/signup"><span className='navSignUp'>Sign up</span></Link>

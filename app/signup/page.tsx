@@ -15,16 +15,17 @@ import { uid } from 'uid';
 import { useId } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ModalSuccessful from '../components/ModalSuccessful';
 import { LineWave } from  'react-loader-spinner'
 import check from '../../assets/check.svg';
-import head from './head';
 
 type ResponseType = {
   credential?: string;
 };
 
 export default function page() {
+  useEffect(() => {
+    document.title = 'SocialHub | Sign up';
+  }, []);
   const [email, setEmail] = useState(emailAddValue); 
   const inputUserEmailElement = document.querySelector('.inputUserEmail');
   const [name, setName] = useState("");
@@ -75,22 +76,32 @@ export default function page() {
       if (!sessionStorage.getItem('signedOut')) {
         // Execute the signOut() function
         sessionStorage.setItem('signedOut', 'true');
-        
-        signOut();
+        if(emailAddValue !== ''){
+          sessionStorage.setItem('emailAddValue', email);
+          signOut();
+        }
       }
-      else if (sessionStorage.getItem('emailAddValue')!== null) {
-        const storedEmail = sessionStorage.getItem('emailAddValue');
+      if (sessionStorage.getItem('emailAddValue')!== null) {
+      const storedEmail = sessionStorage.getItem('emailAddValue');
         if (storedEmail !== null) {
           setEmail(storedEmail);
         }
       }
-      if(emailAddValue !== ''){
-        sessionStorage.setItem('emailAddValue', email);
-      } else{
-        sessionStorage.setItem('emailAddValue', '');
-      }
-    
+      
+
   }, []);
+
+  useEffect(() => {
+    if(emailAddValue !== ''){
+      sessionStorage.setItem('emailAddValue', email);
+      const storedEmail = sessionStorage.getItem('emailAddValue');
+        if (storedEmail !== null) {
+          setEmail(storedEmail);
+        }
+    }else{
+      sessionStorage.setItem('emailAddValue', '');
+    }
+}, [emailAddValue]);
 
   useEffect(() =>{
     setName(fName+' '+lName);
@@ -304,7 +315,7 @@ export default function page() {
 
           <div className='alreadyHaveAnAccount-container'>
             <span className='alreadyHaveAnAccount-text'>Already have an account ?</span>
-            <Link className='alreadyHaveAnAccount-logIntext' href='./login'>Login</Link>
+            <Link className='alreadyHaveAnAccount-logIntext' href='./login'>Log in</Link>
           </div>
           
           {/* <div>
