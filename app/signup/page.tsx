@@ -32,9 +32,10 @@ export default function page() {
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   // const [continueWithGoogle, setContinueWithGoogle] = useState(false)
-  const [signOutGoogle, setSignOutGoogle] = useState(false)
+  const [signUpGoogle, setSignUpGoogle] = useState(false)
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [imageLink, setImageLink] = useState('')
   const confirmPasswordElement = document.querySelector('.confirm-password');
   const [passwordDontMatch, setPasswordDontMatch] = useState(false);
   const [toastConfirmPassword, setToastConfirmPassword] = useState(false);
@@ -42,7 +43,7 @@ export default function page() {
   const [toastText,setToastText] = useState("Email already exist!");
   const [signUpLoader, setSignUpLoader] = useState(false);
   const [signUpSuccessfulModal, setSignUpSuccessfulModal] = useState(false);
-  const [clickSignIn, setClickSignIn] = useState(false);
+  const [clickSignUp, setClickSignUp] = useState(false);
 
   const { data } = useSession();
   
@@ -108,11 +109,11 @@ export default function page() {
   },[fName, lName]);
 
   useEffect(() => {
-    if (toastConfirmPassword) {
+    if (toastConfirmPassword && !signUpGoogle) {
       notify();
-      setClickSignIn(false);
+      setClickSignUp(false);
     }
-  }, [clickSignIn, toastText]);
+  }, [toastConfirmPassword, clickSignUp, toastText]);
 
   // const emailT = data?.user?.email ?? "No email available";
   // console.log(emailT);
@@ -141,7 +142,7 @@ export default function page() {
                 let userEmail = (user as { email?: string }).email;
                 if (userEmail === email){
                   emailExist=true;
-                  setToastText("Email already exist!")
+                  setSignUpGoogle(false)
                   console.log(emailExist)
                   
                 }
@@ -153,10 +154,11 @@ export default function page() {
             setTimeout(() => {
               console.log('saving '+emailExist)
               set(ref(db, `/users/${uuid+nameSplit}`), {
-                test,
+                imageLink,
                 email,
                 name,
-                password
+                password,
+                ID: uuid+nameSplit
               });
               sessionStorage.setItem('signedOut', 'false');
               setSignUpLoader(false);
@@ -167,9 +169,11 @@ export default function page() {
             
           } else{
             inputUserEmailElement?.classList.add('is-invalid');
-            
             setSignUpLoader(false);
-            setToastConfirmPassword(true) 
+            setToastText("Email already exist!");
+            
+            setToastConfirmPassword(true);
+            console.log(clickSignUp+' '+toastText)
           }
         });  
       }
@@ -177,14 +181,18 @@ export default function page() {
   }
 
   useEffect(() =>{
-    if (data && data?.user?.name && data?.user?.email){
+    if (data && data?.user?.name && data?.user?.email && data?.user?.image){
       setSignUpLoader(true);
       console.log(data?.user?.email);
       console.log(data?.user?.name);
       setName(data.user.name);
       setEmail(data.user.email);
+      setImageLink(data.user.image);
+
+      // console.log(data)
       
       if(email != ''){
+        setSignUpGoogle(true);
         submit_to_DB()
       }
       
@@ -199,7 +207,7 @@ export default function page() {
 
   const signUp = (e: any) => {
     e.preventDefault();
-    setClickSignIn(true);
+    setClickSignUp(true);
     if( fName !=='' && lName !=='' && password !=='' && confirmPassword !==''){
       if (password === confirmPassword){
         setToastConfirmPassword(false);

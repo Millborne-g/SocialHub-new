@@ -24,6 +24,15 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
     <html lang="en">
       <head>
         <script src='https://accounts.google.com/gsi/client' async defer></script>
+      
+        {/* <link rel="stylesheet" href=
+            "https://purecss.io/css/pure/pure-min.css"/>
+        <link rel="stylesheet" href=
+        "https://purecss.io/layouts/side-menu/styles.css"/>
+        <script src="https://purecss.io/js/ui.js"></script> */}
+
+        {/* <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" /> */}
+        <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'></link>
       </head>
       
       <body className={inter.className}>

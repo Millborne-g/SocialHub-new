@@ -11,13 +11,16 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 import { LineWave } from  'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Router } from 'next/router';
 
 export default function page() {
     useEffect(() => {
         document.title = 'SocialHub | Log in';
       }, []);
+    // const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [userID, setUserID] = useState('')
     const inputEmailElement = document.querySelector('.inputUserEmail');
     const inputPasswordElement = document.querySelector('.inputUserPassword');
     const [clickSignIn, setClickSignIn] = useState(false);
@@ -57,6 +60,7 @@ export default function page() {
         e.preventDefault();
         setSignInLoader(true);
         setClickSignIn(true);
+        let idTemp: string = '';
         if(email !== '' && password !== ''){
             onValue(ref(db, `/users`), (snapshot) => {
                 const data = snapshot.val();
@@ -67,8 +71,11 @@ export default function page() {
                     if (typeof user === 'object' && user !== null) {
                       let userEmail = (user as { email?: string }).email;
                       let userPassword = (user as { password?: string }).password;
+                      let userIDDB = (user as { ID?: string }).ID;
+                      
                       if (userEmail === email){
                         foundEmail = true;
+                        idTemp = userIDDB ?? "";
                       }
                       if(userPassword === password){
                         foundPassword = true;
@@ -79,13 +86,13 @@ export default function page() {
 
                 if(foundEmail === false){
                     setSignInLoader(false);
-                    
+                    idTemp = '';
                     inputEmailElement?.classList.add('is-invalid');
                     setShowToast(true);
                     setToastText("Email don't exist.")
                 } 
                 else if(foundPassword === false){
-                    
+                    idTemp = '';
                     setSignInLoader(false);
                     inputPasswordElement?.classList.add('is-invalid');
                     setShowToast(true);
@@ -95,7 +102,13 @@ export default function page() {
                     setSignInLoader(true);
                     setTimeout(() => {
                         console.log('yeeey sulod naka');
+                        localStorage.setItem('userID', idTemp);
+                        console.log('mao ning id '+ idTemp);
+                        
                         setSignInLoader(false);
+                        console.log(localStorage.getItem('userID'));
+                        // window.location.href = 'http://localhost:3000/';
+                        window.open('http://localhost:3000/', '_self');
                         
                     },3000);
                 } 
@@ -121,6 +134,7 @@ export default function page() {
             console.log('yeeey sulod naka');
                 proceedNextPage()
                 setSignInLoader(false);
+                
                         
             },3000);
             
