@@ -534,7 +534,7 @@ a {
 }
 .home-section{
   position: relative;
-  background: #E4E9F7;
+  background: #FAFAFC;
   height: 100vh;
   left: 260px;
   width: calc(100% - 260px);
@@ -546,8 +546,9 @@ a {
 }
 .home-section .home-content{
   height: 60px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
+  padding: 0 3%;
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text{
@@ -595,3 +596,259 @@ a {
  .footer span a:hover{
   color: #0066FF;
  }
+
+
+ /* Dashboard */
+
+.navbarDashboard{
+  /* background-color: #0B63F8; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #0066FF; */
+  height: 90px;
+  /* justify-content: center; */
+  margin-bottom: 2%;
+}
+
+.headerDashboard{
+  flex: 0.5;
+}
+
+.headerDashboard span{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  /* line-height: 38px; */
+  /* identical to box height */
+
+
+  color: #000000;
+}
+
+.searchBarDashboard{
+  flex: 2.2;
+  /* background-color: #F9ED32; */
+}
+
+.searhbarForm{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  /* background-color: #F9ED32; */
+  padding: 0 2%;
+}
+
+.searhInput{
+  background: #FFFFFF;
+  height: 100%;
+  border: 1.5px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin-left: -45px;
+}
+
+.btnDividerContainer{
+  height: 100%;
+  width: 5px;
+  margin-left: -45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #0066FF; */
+}
+
+.btnDivider{
+  height: 70%;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  /* transform: rotate(90deg); */
+}
+
+.searhBtn{
+  height: 100%;
+  margin-left: -43px;
+
+}
+
+.userAccount{
+  flex: 0.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1%;
+  /* background-color: #0066FF; */
+}
+
+.userAccount-inner{
+  width: 100%;
+  height: 100%;
+  
+  
+}
+
+.userDropdown{
+  float: right;
+}
+
+/* UserAccount.css */
+.userDropdown .dropdown-toggle::after {
+  display: none; /* Hide the dropdown icon */
+}
+
+.userImageContainer{
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  position: relative;
+  /* overflow: hidden; */
+  
+}
+
+.userImageProfile{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 0.5px solid #c8c8c8;
+}
+
+.totalCreateContainer{
+  /* background-color: #F9ED32; */
+  width: 100%;
+  margin-bottom: 2%;
+  /* height: 100px; */
+}
+
+.totalCreateContainer-inner{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.totalContainer span{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+
+  color: #484848;
+}
+
+.createLinkBtn{
+  height: 50px;
+  width: 170px;
+}
+
+.userLinksContaner{
+  height: 130px;
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
+  border-radius: 5px;
+  padding: 0 2%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.userLinksContaner-inner{
+  height: 80%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #0066FF; */
+}
+
+.userLinksContanerLeft{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 70%;
+  /* background-color: #0066FF; */
+}
+
+.linkImageContainer{
+  width: 200px;
+  height: 100%;
+  border: 0.2px solid #e3e3e3;
+  border-radius: 10px;
+  overflow: hidden;
+  
+  
+}
+
+.linkImageContainer img{
+  width: 100%;
+  height: 100%;
+}
+
+.userLinkTitle{
+  padding: 0 2%;
+  display: flex;
+  width: 100%;
+  
+  flex-direction: column;
+  /* background-color: red; */
+  
+}
+
+.userLinkTitleText{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 25px;
+  line-height: 50px;
+  /* identical to box height */
+
+
+  color: #000000;
+}
+
+.userLinksContanerRight{
+  /* background-color: #004dc0; */
+  width: 30%;
+}
+
+.userLinkTitleTextDate{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+
+  color: rgba(0, 0, 0, 0.50);
+}
+
+.userLinkBtnContainer{
+  
+  /* background-color: #004dc0; */
+}
+
+.userLinkBtnContainer-inner{
+  float: right;
+  /* margin-top: 5%; */
+  padding: 0;
+  /* background-color: #004dc0; */
+}
+
+.userCopyBtn{
+  margin-top: 5%;
+}
+
+/* .userDotsBtn{
+  height: 5px;
+  border: none;
+} */
+
+.userLinkBtnIcon{
+  font-size: 40px;
+}
+
+ /* end dashboard */
