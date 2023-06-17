@@ -293,7 +293,7 @@ export default function page() {
             </div>
             <div className="form-group textFieldsSignUp">
               <label htmlFor="inputEmail" className='signUpLabel'>Email address</label>
-              <input type="email" className="form-control  inputUserEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={(e) => {setEmail(e.target.value); inputUserEmailElement?.classList.remove('is-invalid'); setToastConfirmPassword(false) }} required/>
+              <input type="email" className="form-control inputUserEmail" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={(e) => {setEmail(e.target.value); inputUserEmailElement?.classList.remove('is-invalid'); setToastConfirmPassword(false) }} required/>
             
             </div>
             <div className="form-group textFieldsSignUp">

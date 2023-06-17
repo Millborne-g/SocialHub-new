@@ -9,28 +9,98 @@ import heroImage from '../assets/hero-image.svg'
 import Navbar from './Navbar';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Button, Modal  } from 'react-bootstrap';
 import SideBar from './components/SideBar';
+import Loader from './components/Loader';
 import Links from './components/Links';
+import {db,storage} from '../firebase';
+import { onValue, ref, remove, set, update } from 'firebase/database';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, StorageReference } from "firebase/storage";
+import { uid } from 'uid';
 
 export let emailAddValue = '';
 
 export default function HeroSection() {
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [emailAdd, setEmailAdd]= useState('')
+    emailAddValue = emailAdd;
+    console.log(localStorage.getItem('userID'));
+    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+    const [linkTitle, setLinkTitle] = useState('')
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);;
+    const [imageLinkURL, setImageLinkURL] = useState('');
+    const [showLoader, setShowLoader] = useState(false)
+
+    const handleClose = () => setShowCreateModal(false);
+    const handleShow = () => setShowCreateModal(true);
     useEffect(() => {
         document.title = 'SocialHub';
       }, []);
-      useEffect(() => {
+    useEffect(() => {
         // This useEffect hook ensures that the Bootstrap JavaScript code is executed
         // after the component is mounted
         if (typeof window !== 'undefined') {
           // Check if window is defined to avoid server-side rendering issues
           require('bootstrap/dist/js/bootstrap.bundle.min.js');
         }
-      }, []);
-    const [emailAdd, setEmailAdd]= useState('')
-    emailAddValue = emailAdd;
-    console.log(localStorage.getItem('userID'));
-    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+    }, []);
+
+    useEffect(()=>{
+        const uuid = uid();
+        const currentDate = new Date();
+        const options: Intl.DateTimeFormatOptions = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+        };
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+
+        if(imageLinkURL){
+            set(ref(db, `/Links/${userID}/${uuid}`), {
+                linkTitle,
+                imageLinkURL,
+                formattedDate
+            });
+            setShowLoader(false)
+        }
+        
+    },[imageLinkURL])
+
+    
+    const handleFileChange = (e: any) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+      };
+    
+      //write
+    const submit_Link_to_DB = () =>{
+       setShowLoader(true);
+       setShowCreateModal(false)
+        if (selectedFile) {
+            const test = 'test';
+            // const storageRefImage = storageRef(storage);
+            
+            const fileRef: StorageReference = storageRef(storage, selectedFile.name);
+
+            uploadBytes(fileRef, selectedFile)
+                .then((snapshot) => getDownloadURL(snapshot.ref))
+                .then((url) => {
+                    setImageLinkURL(url);
+                })
+                .catch((error) => {
+                    console.error('Error uploading image:', error);
+                });
+
+                
+        }
+
+        // alert('Saved to Database');
+    }
+
+    
     return (
         <>
             {!userID ?
@@ -117,7 +187,7 @@ export default function HeroSection() {
                                     <div className="totalContainer">
                                         <span>Total 30 links</span>
                                     </div>
-                                    <button type="button" className="btn btn-primary createLinkBtn"> <span><i className='bx bx-plus' ></i>Create Link</span> </button>
+                                    <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span><i className='bx bx-plus' ></i>Create Link</span> </button>
                                 </div>
                             </div>
 
@@ -125,9 +195,38 @@ export default function HeroSection() {
                                 <Links />
                                 <Links />
                             </div>
+
+                            <Modal show={showCreateModal} onHide={handleClose} centered>
+                                <Modal.Header closeButton>
+                                <Modal.Title>Create a Link</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <form>
+                                        <label htmlFor="createLink" className="form-label userCreateLinkNameLabel">Link name</label>
+                                        <input type="text" className="form-control userCreateLinkInput" id="createLink" placeholder='Link name' value={linkTitle} onChange={(e)=>setLinkTitle(e.target.value)} required/>
+
+                                        <label htmlFor="createLinkImage" className="form-label userCreateLinkNameLabel">Link image</label>
+                                        <input type="file" className="form-control" id="createLinkImage" accept="image/png, image/gif, image/jpeg" onChange={(e) => handleFileChange(e)}/>
+                                    </form>
+                                    
+                                </Modal.Body>
+                                <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" type='submit' onClick={()=>submit_Link_to_DB()}>Save</Button>
+                                </Modal.Footer>
+                            </Modal>
                             
                         </div>
-                    </section>             
+                      
+                            
+                      
+                    </section>  
+                    {showLoader && 
+                        <Loader/>  
+                    }
+                             
                 </>
 
 
