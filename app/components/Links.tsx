@@ -28,7 +28,7 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                         <div className="userLinkBtnContainer-inner">
                             <button type="button" className="btn userCopyBtn"> <span className='userLinkBtnIcon'><i className='bx bx-copy-alt' ></i></span> </button>
                            
-                            <Dropdown className='userDropdown'>
+                            <Dropdown className='userDropdownLinks'>
                                 <div className="userDotsContainer">
                                     <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
                                         <span className='userLinkBtnIcon'>⋮</span>    

@@ -156,6 +156,10 @@ a {
   color: #ffffff;
 }
 
+.userDropdownNavbar{
+  margin-top: -3%;
+}
+
 .hero{
   /* background-color: aqua; */
   width: 100vw;
@@ -612,7 +616,8 @@ a {
 }
 
 .headerDashboard{
-  flex: 0.5;
+  flex: 0.4;
+  /* background-color: #0B63F8; */
 }
 
 .headerDashboard span{
@@ -628,7 +633,7 @@ a {
 }
 
 .searchBarDashboard{
-  flex: 2.2;
+  flex: 1.6;
   /* background-color: #F9ED32; */
 }
 
@@ -672,12 +677,14 @@ a {
 }
 
 .userAccount{
-  flex: 0.3;
+  height: 50px;
+  flex: 0.5;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 1%;
   /* background-color: #0066FF; */
+
 }
 
 .userAccount-inner{
@@ -689,27 +696,39 @@ a {
 
 .userDropdown{
   float: right;
+  /* background-color: #00ff6e; */
+  margin-top: -6%;
 }
 
 /* UserAccount.css */
-.userDropdown .dropdown-toggle::after {
-  display: none; /* Hide the dropdown icon */
-}
+/* .userDropdown .dropdown-toggle::after {
+  display: none; 
+} */
 
 .userImageContainer{
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   position: relative;
   /* overflow: hidden; */
+  /* background-color:#F9ED32; */
   
 }
 
 .userImageProfile{
-  width: 100%;
-  height: 100%;
+  width: 45px;
+  height: 45px;
   border-radius: 10px;
   border: 0.5px solid #c8c8c8;
+  margin-right: 10px;
+}
+
+.userNameDashboard{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
 }
 
 .totalCreateContainer{
@@ -741,6 +760,11 @@ a {
 .createLinkBtn{
   height: 50px;
   width: 170px;
+}
+
+.userLinksContanerDashboard{
+  /* background-color: #F9ED32; */
+  padding-bottom: 2%;
 }
 
 .userLinksContaner{
@@ -828,14 +852,15 @@ a {
 
 .userLinkBtnContainer{
   
-  /* background-color: #004dc0; */
+  /* background-color: #26c000; */
 }
 
 .userLinkBtnContainer-inner{
   float: right;
   /* margin-top: 5%; */
+  display: flex;
   padding: 0;
-  /* background-color: #004dc0; */
+  /* background-color: #70c000; */
 }
 
 .userCopyBtn{
@@ -863,6 +888,10 @@ a {
 
 .userCreateLinkInput{
   margin-bottom: 13px;
+}
+
+.userDropdownLinks .dropdown-toggle::after {
+  display: none; 
 }
 
  /* end dashboard */

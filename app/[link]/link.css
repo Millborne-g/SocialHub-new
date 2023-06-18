@@ -1,0 +1,99 @@
+.socialLinkContainer{
+    margin-top: 7%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: aqua; */
+}
+.socialLinkContainer-inner{
+    width: 700px;
+}
+
+.socialLinkHeader{
+    display: flex;
+    align-items: center;
+    margin-bottom: 3%;
+}
+
+.socialLinkImageContainer{
+    width: 150.72px;
+    height: 150.72px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-right: 10px;
+
+    border: 0.5px solid black
+    /* border: 2px solid transparent;
+    background-image: linear-gradient(90deg, rgba(0, 102, 255, 1) 0%, rgba(246, 235, 66, 1) 100%);
+    background-clip: padding-box;
+    border-radius: 10px;
+    padding: 5px;  */
+}
+
+.socialLinkImage{
+    height: 100%;
+    width: 100%;
+}
+
+.socialLinkName{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 56px;
+}
+
+.socialLinkByUserImage{
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+}
+
+.socialLinkDivider{
+    width: 100%;
+    border-top: 0.5px solid #000000;
+}
+
+.socialLinkVideosLabel{
+    display: flex;
+    align-items: center;
+    /* padding: 5px 0; */
+    /* background-color: aqua; */
+}
+
+.socialLinkVideosLabel-inner{
+    /* background-color: rgb(51, 255, 0); */
+    height: 100%;
+    border-top: 2px solid #000000;
+    padding: 5px;
+}
+
+.socialLinkVideosLabelImage{
+    width: 17px;
+    height: 17px;
+    margin-right: 2px;
+}
+
+.socialLinkVideosLabelText{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.socialLinkVideosContainer{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: beige;
+    
+}
+
+.socialLinkItem{
+    width: 230px;
+    height: 360px;
+    border: 2px solid #000000;
+    margin: 0 3.34px 3% 0;
+}

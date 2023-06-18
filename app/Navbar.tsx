@@ -1,12 +1,19 @@
 "use client"
-import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import Link from 'next/link';
 import logo from '../assets/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Dropdown, Button, Modal  } from 'react-bootstrap';
+import {db,storage} from '../firebase';
+import { onValue, ref, remove, set, update } from 'firebase/database';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, StorageReference } from "firebase/storage";
 
 
 // export default function Navbar({ setShowNavbar }: { setShowNavbar: React.Dispatch<React.SetStateAction<boolean>> }) {
 export default function Navbar() {
+  const [userID, setUserID] = useState(localStorage.getItem('userID'));
+  const [userName, setUserName] = useState('');
+  const [userImage, setUserImage] = useState('');
   useEffect(() => {
     // This useEffect hook ensures that the Bootstrap JavaScript code is executed
     // after the component is mounted
@@ -15,6 +22,35 @@ export default function Navbar() {
       require('bootstrap/dist/js/bootstrap.bundle.min.js');
     }
   }, []);
+
+  useEffect(() =>{
+    if(userID){
+        if(userID){
+            onValue(ref(db, `/users/${userID}`), (snapshot) => {
+                // setUserLinkList([]);
+                const data = snapshot.val();
+                if (data !== null) {
+                    const reversedData = Object.values(data).reverse();
+                    reversedData.map((linkDetails) => {
+                        if (typeof linkDetails === 'object' && linkDetails !== null) {
+                        let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
+                        let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
+                        let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
+                        // setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
+                        }
+                    });
+
+                    let userFullName = data.name;
+                    let userImage = data.imageLink;
+
+                    setUserName(userFullName);
+                    setUserImage(userImage);
+              }
+            });
+        }
+    }
+  },[userID])
+  
   return (
     <header>
         <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
@@ -31,13 +67,39 @@ export default function Navbar() {
                 </button> */}
                 <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul className="navbar-nav">
-                      <li className="nav-item">
-                        <span className="nav-link"><Link className='navlogin' href="/login">Log in</Link></span>
-                      </li>
-                      <li className="nav-item">
-                        <Link type="button" className="btn btn-primary" href="/signup"><span className='navSignUp'>Sign up</span></Link>
-                        {/* onClick={() => {setShowNavbar(false)}} */}
-                      </li>
+                      {userID ? 
+                        <li className="nav-item">
+                          <div className="userAccount">
+                                    
+                            <div className="userAccount-inner">
+                                <Dropdown className='userDropdownNavbar'>
+                                    <div className="userImageContainer">
+                                      <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
+                                          <img className='userImageProfile' src={userImage} alt="" />
+                                          <span className='userNameDashboard'>{userName}</span>
+                                      </Dropdown.Toggle>
+                                      </div>
+                                      <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
+                                      <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                      </Dropdown.Menu>
+                                  </Dropdown>
+                              </div>
+                            </div> 
+                          </li>
+                        :
+                        <>
+                          <li className="nav-item">
+                            <span className="nav-link"><Link className='navlogin' href="/login">Log in</Link></span>
+                          </li>
+                          <li className="nav-item">
+                            <Link type="button" className="btn btn-primary" href="/signup"><span className='navSignUp'>Sign up</span></Link>
+                            {/* onClick={() => {setShowNavbar(false)}} */}
+                          </li>
+                        </>
+                        
+
+                      }
+                      
                     </ul>
                 </div>
                 

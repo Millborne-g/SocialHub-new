@@ -22,11 +22,14 @@ import { uid } from 'uid';
 export let emailAddValue = '';
 
 export default function HeroSection() {
+    const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    const [userName, setUserName] = useState('');
+    const [userImage, setUserImage] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [emailAdd, setEmailAdd]= useState('')
     emailAddValue = emailAdd;
     console.log(localStorage.getItem('userID'));
-    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+    
     const [linkTitle, setLinkTitle] = useState('')
     const [selectedFile, setSelectedFile] = useState<File | null>(null);;
     const [imageLinkURL, setImageLinkURL] = useState('');
@@ -45,6 +48,35 @@ export default function HeroSection() {
           require('bootstrap/dist/js/bootstrap.bundle.min.js');
         }
     }, []);
+
+    useEffect(() =>{
+        if(userID){
+            if(userID){
+                onValue(ref(db, `/users/${userID}`), (snapshot) => {
+                    // setUserLinkList([]);
+                    const data = snapshot.val();
+                    if (data !== null) {
+                        const reversedData = Object.values(data).reverse();
+                        reversedData.map((linkDetails) => {
+                            if (typeof linkDetails === 'object' && linkDetails !== null) {
+                            let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
+                            let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
+                            let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
+                            // setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
+                            }
+                        });
+
+                        let userFullName = data.name;
+                        let userImage = data.imageLink;
+
+                        setUserName(userFullName);
+                        setUserImage(userImage);
+                        
+                  }
+                });
+            }
+        }
+    },[userID])
 
     useEffect(()=>{
         const uuid = uid();
@@ -74,7 +106,8 @@ export default function HeroSection() {
             set(ref(db, `/UserLinks/${userID}/${formattedTitleDateTime}_${uuid}`), {
                 linkTitle,
                 imageLinkURL,
-                formattedDate
+                formattedDate,
+                uuid
             });
             
             set(ref(db, `/Links/${uuid}`), {
@@ -82,7 +115,8 @@ export default function HeroSection() {
                 imageLinkURL,
                 formattedDate,
                 userID,
-                socialLinks: ''
+                socialLinks: '',
+                uuid
             });
 
             setShowLoader(false)
@@ -187,19 +221,18 @@ export default function HeroSection() {
 
                                 <div className="userAccount">
                                    
-                                <div className="userAccount-inner">
-                                    <Dropdown className='userDropdown'>
-                                        <div className="userImageContainer">
-                                        <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
-                                            <img className='userImageProfile' src={"https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"} alt="" />
-                                        </Dropdown.Toggle>
-                                        </div>
-                                        <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                                        <Dropdown.Item href="#">Another action</Dropdown.Item>
-                                        <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
+                                    <div className="userAccount-inner">
+                                        <Dropdown className='userDropdown'>
+                                            <div className="userImageContainer">
+                                            <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
+                                                <img className='userImageProfile' src={userImage} alt="" />
+                                                <span className='userNameDashboard'>{userName}</span>
+                                            </Dropdown.Toggle>
+                                            </div>
+                                            <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
+                                            <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
                                     </div>
                                 </div>
                             </div>
