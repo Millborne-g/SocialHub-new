@@ -73,10 +73,10 @@ export default function Navbar() {
                                     
                             <div className="userAccount-inner">
                                 <Dropdown className='userDropdownNavbar'>
-                                    <div className="userImageContainer">
+                                    <div className="userImageContainerNavbar">
                                       <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
-                                          <img className='userImageProfile' src={userImage} alt="" />
-                                          <span className='userNameDashboard'>{userName}</span>
+                                          <img className='userImageProfileNavbar' src={userImage} alt="" />
+                                          <span className='userNameDashboardNavbar'>{userName}</span>
                                       </Dropdown.Toggle>
                                       </div>
                                       <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">

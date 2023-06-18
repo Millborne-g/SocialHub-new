@@ -68,7 +68,7 @@ export default function linkDetails() {
 
               <div className="socialLinkVideosContainer">
                 <div className="socialLinkItem">
-                  <iframe src="http://www.google.com/">Google</iframe>
+                  
                 </div>
                 <div className="socialLinkItem">
                   
