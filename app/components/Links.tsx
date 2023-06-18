@@ -1,20 +1,25 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Dropdown } from 'react-bootstrap'; 
+interface LinksProps {
+  userLinkTitle: string;
+  userFormattedDate: string;
+  userImageLinkURL: string;
+}
 
-export default function Links() {
+export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL }: LinksProps) {
   return (
     <>
         <div className="userLinksContaner">
             <div className="userLinksContaner-inner">
                 <div className="userLinksContanerLeft">
                     <div className="linkImageContainer">
-                        <img src={"https://www.socialmediabutterflyblog.com/wp-content/uploads/sites/567/2020/06/45AADA8F-D4A6-4FFB-9009-966337D5CC1B.png"} alt="" />
+                        <img src={userImageLinkURL} alt="" />
                     </div>
                     
                     <div className="userLinkTitle">
-                        <span className='userLinkTitleText'>Title link</span>
-                        <span className='userLinkTitleTextDate'><i className='bx bxs-calendar' ></i> <span>May 22, 2023 2:35 PM GMT</span></span>
+                        <span className='userLinkTitleText'>{userLinkTitle}</span>
+                        <span className='userLinkTitleTextDate'><i className='bx bxs-calendar' ></i><span>{userFormattedDate}</span></span>
                     </div>
                 </div>
 

@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, Button, Modal  } from 'react-bootstrap';
 import SideBar from './components/SideBar';
 import Loader from './components/Loader';
+import LinkList from './components/LinkList';
 import Links from './components/Links';
 import {db,storage} from '../firebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
@@ -56,15 +57,37 @@ export default function HeroSection() {
           minute: 'numeric',
           hour12: true
         };
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
+        // title date and time
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        // end title date and time
+      
+        const formattedTitleDateTime = `${year}-${month}-${day}_${hours}:${minutes}:${seconds}`;
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+        
         if(imageLinkURL){
-            set(ref(db, `/Links/${userID}/${uuid}`), {
+            set(ref(db, `/UserLinks/${userID}/${formattedTitleDateTime}_${uuid}`), {
                 linkTitle,
                 imageLinkURL,
                 formattedDate
             });
+            
+            set(ref(db, `/Links/${uuid}`), {
+                linkTitle,
+                imageLinkURL,
+                formattedDate,
+                userID,
+                socialLinks: ''
+            });
+
             setShowLoader(false)
+            setLinkTitle('')
+            setImageLinkURL('')
         }
         
     },[imageLinkURL])
@@ -192,8 +215,7 @@ export default function HeroSection() {
                             </div>
 
                             <div className="userLinksContanerDashboard">
-                                <Links />
-                                <Links />
+                                <LinkList />
                             </div>
 
                             <Modal show={showCreateModal} onHide={handleClose} centered>
