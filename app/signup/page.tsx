@@ -27,7 +27,7 @@ export default function page() {
     document.title = 'SocialHub | Sign up';
   }, []);
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
-  const [email, setEmail] = useState(emailAddValue); 
+  const [email, setEmail] = useState(localStorage.getItem('heroPageEmail')?? ''); 
   const inputUserEmailElement = document.querySelector('.inputUserEmail');
   const [name, setName] = useState("");
   const [fName, setFName] = useState("");
@@ -111,7 +111,7 @@ export default function page() {
     }else{
       sessionStorage.setItem('emailAddValue', '');
     }
-}, [emailAddValue]);
+}, [localStorage.getItem('userID')]);
 
   useEffect(() =>{
     setName(fName+' '+lName);
@@ -129,7 +129,83 @@ export default function page() {
 
 
   const submit_to_DB_Google = () => {
-
+    const test = 'test';
+    const uuid = uid();
+    let idTemp: string = '';
+    let emailExist: boolean = false;
+    // if(fName !== '' && lName !== ''){
+    //   setName(fName+' '+lName);
+    // }
+    // setName(fName+' '+lName);
+    console.log('fullname '+ name);
+    let nameSplit = name.split(' ')[0];
+    if (email !== ''){
+      // loadDB
+      onValue(ref(db, `/users`), (snapshot) => {
+        const data = snapshot.val();
+        if (data !== null) {
+          
+          Object.values(data).map((user) => {
+            setSignUpLoader(true);
+            if (typeof user === 'object' && user !== null) {
+              let userEmail = (user as { email?: string }).email;
+              let userTempID = (user as {ID?: string}).ID;
+              if (userEmail === email){
+                
+                emailExist=true;
+                setSignUpGoogle(false);
+                // console.log('userTempID ---------'+userTempID)
+                if(userTempID !==undefined){
+                  idTemp = userTempID;
+                } 
+                
+                
+              }
+            }
+          });
+        }
+        if(emailExist === false){
+          setSignUpLoader(true);
+          setTimeout(() => {
+            console.log('saving '+emailExist);
+            
+            set(ref(db, `/users/${uuid+nameSplit}`), {
+              imageLink,
+              email,
+              name,
+              password,
+              ID: uuid+nameSplit
+            });
+            sessionStorage.setItem('signedOut', 'false');
+            setSignUpLoader(false);
+            // alert('Saved to Database');
+            setSignUpSuccessfulModal(true);
+            setToastConfirmPassword(false);
+            // setTimeout(() =>{
+            //   window.open('http://localhost:3000/', '_self');
+            // }, 2000)
+            localStorage.setItem('userID', uuid+nameSplit);
+            setUserID(localStorage.getItem('userID'));
+            
+          }, 3000);
+          
+          // 
+          
+        } else{
+          // inputUserEmailElement?.classList.add('is-invalid');
+          // setSignUpLoader(false);
+          // setToastText("Email already exist!");
+          
+          // setToastConfirmPassword(true);
+          // console.log(clickSignUp+' '+toastText)
+          setSignUpLoader(true);
+          setTimeout(() =>{
+            localStorage.setItem('userID', idTemp);
+            setUserID(localStorage.getItem('userID'));
+          }, 3000)
+        }
+      });  
+    }
   }
 
   //write
@@ -218,7 +294,7 @@ export default function page() {
       
       if(email != ''){
         setSignUpGoogle(true);
-        submit_to_DB()
+        submit_to_DB_Google()
       }
       
     }

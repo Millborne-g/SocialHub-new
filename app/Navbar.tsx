@@ -7,6 +7,7 @@ import { Dropdown, Button, Modal  } from 'react-bootstrap';
 import {db,storage} from '../firebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, StorageReference } from "firebase/storage";
+import {useSession, signIn, signOut} from 'next-auth/react';
 
 
 // export default function Navbar({ setShowNavbar }: { setShowNavbar: React.Dispatch<React.SetStateAction<boolean>> }) {
@@ -55,7 +56,7 @@ export default function Navbar() {
     <header>
         <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
             <div className="container">
-                <a className="navbar-brand" href="http://localhost:3000/">
+                <a className="navbar-brand" href="#">
                     <img className='logoImg' src={logo.src} alt="" />
                     <span className='logoName'>SocialHub</span> 
                 </a>
@@ -80,7 +81,7 @@ export default function Navbar() {
                                       </Dropdown.Toggle>
                                       </div>
                                       <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                      <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                      <Dropdown.Item onClick={() => {localStorage.setItem('userID', ''); signOut()}}>Logout</Dropdown.Item>
                                       </Dropdown.Menu>
                                   </Dropdown>
                               </div>

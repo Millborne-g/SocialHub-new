@@ -11,6 +11,8 @@ import SocialLink from './components/socialLink';
 import { uid } from 'uid';
 
 import { Dropdown, Button, Modal  } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function linkDetails() {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
@@ -32,6 +34,34 @@ export default function linkDetails() {
   const [socialTitle, setSocialTitle] = useState('')
   const [socialLink, setSocialLink] = useState('')
 
+  const [showToast, setShowToast] = useState(false);
+  const [toastText,setToastText] = useState('');
+
+  const customToastId = "custom-id-notify";
+
+  useEffect(() => {
+    document.title = linkTitle;
+  }, [linkTitle]);
+  
+  const notifySuccess = () => toast.success(toastText, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      toastId: customToastId
+  });
+
+  useEffect(() => {
+    if (showToast) {
+        notifySuccess();
+        // setClickSignIn(false);
+    }
+  }, [toastText]);
+
   const handleClose = () => {
     setShowCreateModal(false);
     setSocialTitle('');
@@ -49,7 +79,7 @@ export default function linkDetails() {
     const minutes = String(currentDate.getMinutes()).padStart(2, '0');
     const seconds = String(currentDate.getSeconds()).padStart(2, '0');
     // end title date and time
-  
+
     const formattedTitleDateTime = `${year}-${month}-${day}_${hours}:${minutes}:${seconds}`;
     if(socialTitle && socialLink){
       const uuid = uid();
@@ -62,6 +92,8 @@ export default function linkDetails() {
       setSocialTitle('');
       setSocialLink('');
       setShowCreateModal(false)
+      setShowToast(true);
+      setToastText('Social successfully created!');
     }
     
   }
@@ -165,9 +197,17 @@ export default function linkDetails() {
               </div>
 
               <div className="socialLinkItemContainer">
-                {socialLinkList.map((linkDetails, index) => (
-                  <SocialLink key={index} userLinkTitle={linkDetails[0]} userLinkUrl={linkDetails[1]} userLinkUuid={linkDetails[2]}/>
-                ))}
+                {socialLinkList.length > 0 ? (
+                  socialLinkList.map((linkDetails, index) => (
+                    <SocialLink key={index} userLinkTitle={linkDetails[0]} userLinkUrl={linkDetails[1]} userLinkUuid={linkDetails[2]} setToastText={setToastText}/>
+                  ))
+                  ):(
+                    <div className="listEmptyContainer">
+                        <span className='listEmptyText'>List Empty</span>
+                    </div>
+                  )
+                }
+                
                   
                 
               </div>
@@ -197,6 +237,10 @@ export default function linkDetails() {
           <Button variant="primary" type='submit' onClick={()=>submit_Social_to_DB()}>Save</Button>
           </Modal.Footer>
       </Modal>
+
+      { showToast &&
+        <ToastContainer/>
+      }
     </>
   )
 }

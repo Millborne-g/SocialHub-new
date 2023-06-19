@@ -6,9 +6,10 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 
 interface props {
   setListCount: Function
+  setToastText: Function
 }
 
-export default function LinkList({setListCount}:props) {
+export default function LinkList({setListCount, setToastText}:props) {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [userLinkList, setUserLinkList] = useState<any[]>([]);
 
@@ -26,10 +27,17 @@ export default function LinkList({setListCount}:props) {
                     let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
                     let userLinkUuid = (linkDetails as { uuid?: string }).uuid;
                     setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL, userLinkUuid]]);  
-                    setListCount(''+(index+1));
+                    if(index>=0){
+                      setListCount(''+(index+1));
+                    } else{
+                      setListCount(''+0);
+                    }
+                    
                     }
                     
                 });
+          } else{
+            setListCount(''+0);
           }
 
           
@@ -40,9 +48,23 @@ export default function LinkList({setListCount}:props) {
   return (
 
     <>
-        {userLinkList.map((linkDetails, index) => (
-            <Links key={index} userLinkTitle={linkDetails[0]} userFormattedDate={linkDetails[1]} userImageLinkURL={linkDetails[2]} userLinkUuid={linkDetails[3]}/>
-        ))}
+    {userLinkList.length > 0 ? (
+      userLinkList.map((linkDetails, index) => (
+        <Links
+          key={index}
+          userLinkTitle={linkDetails[0]}
+          userFormattedDate={linkDetails[1]}
+          userImageLinkURL={linkDetails[2]}
+          userLinkUuid={linkDetails[3]}
+          setToastText={setToastText}
+        />
+      ))
+    ) : (
+      <div className="listEmptyContainer">
+          <span className='listEmptyText'>List Empty</span>
+      </div>
+      
+    )}
     
     </>
   )

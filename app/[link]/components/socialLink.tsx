@@ -8,10 +8,11 @@ interface SocialLinkProps {
   userLinkTitle: string,
   userLinkUrl: string,
   userLinkUuid: string,
+  setToastText: Function
 
 } 
 
-export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid}:SocialLinkProps) {
+export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, setToastText}:SocialLinkProps) {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [linkID, setLinkID] = useState('');
 
@@ -32,6 +33,7 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid}:So
                 if(userLinkUuid === linkUuid){
                   // console.log('found '+linkdateID);
                   remove(ref(db, `/Links/${linkID}/socialLinks/${linkdateID}`));
+                  setToastText('Social successfully deleted!');
                 }
             }
             //   console.log(todo.plateNumber)
@@ -53,12 +55,12 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid}:So
     <>
         <div className="socialLinkItem" >
           <div className="socialLinkItem-inner">
-            <div className="socialLinkItemRight">
+            <a className="socialLinkItemRight" href={userLinkUrl} target='_blank'>
               <span className='socialLinkItemName'>{userLinkTitle}</span> <br />
               <span className='socialLinkItemLink'>{userLinkUrl}</span>
-            </div>
+            </a>
 
-            <div className="socialLinkItemRight">
+            <div className="socialLinkItemLeft">
             {userID && 
               <Dropdown className='userDropdownLinks'>
                   <div className="userDotsContainer">

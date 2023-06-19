@@ -630,24 +630,24 @@ a {
 
  /* Dashboard */
 
-.dashboard{
-  /* background-color: #FAFAFC; */
-  height: 100%;
+ .dashboard{
+  
  }
 
 .navbarDashboard{
   /* background-color: #0B63F8; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   /* background-color: #0066FF; */
   height: 90px;
   /* justify-content: center; */
+  margin-top: 100px;
   margin-bottom: 2%;
 }
 
 .headerDashboard{
-  flex: 0.4;
+  /* flex: 0.4; */
   /* background-color: #0B63F8; */
 }
 
@@ -664,8 +664,9 @@ a {
 }
 
 .searchBarDashboard{
-  flex: 1.6;
+  /* flex: 1.6; */
   /* background-color: #F9ED32; */
+  width: 50%;
 }
 
 .searhbarForm{
@@ -674,7 +675,7 @@ a {
   justify-content: center;
   height: 50px;
   /* background-color: #F9ED32; */
-  padding: 0 2%;
+  /* padding: 0 2%; */
 }
 
 .searhInput{
@@ -765,7 +766,7 @@ a {
 .totalCreateContainer{
   /* background-color: #F9ED32; */
   width: 100%;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
   /* height: 100px; */
 }
 
@@ -793,6 +794,12 @@ a {
   width: 170px;
 }
 
+.userDashboardDivider{
+  width: 100%;
+  border-top: 0.5px solid #000000;
+  margin-bottom: 2%;
+}
+
 .userLinksContanerDashboard{
   /* background-color: #F9ED32; */
   padding-bottom: 2%;
@@ -802,12 +809,16 @@ a {
   height: 150px;
   width: 100%;
   background: #FFFFFF;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   padding: 0 2%;
   display: flex;
   align-items: center;
   margin-bottom: 1%;
+}
+
+.userLinksContaner:hover{
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.30);
 }
 
 .userLinksContaner-inner{
@@ -924,7 +935,37 @@ a {
   display: none; 
 }
 
+.listEmptyContainer{
+  width: 100%;
+  /* background-color: #0B63F8; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5% 0;
+}
+
+.listEmptyText{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 42px;
+  text-align: center;
+
+  color: #7A7A7A;
+}
+
  /* end dashboard */
+
+ /* Footer */
+.portfolioLink{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  color: #000000;
+}
+ /* End Footer  */
 
  /* Loader */
  .popup{

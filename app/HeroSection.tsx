@@ -19,6 +19,8 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, StorageReference } from "firebase/storage";
 import {useSession, signIn, signOut} from 'next-auth/react';
 import { uid } from 'uid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export let emailAddValue = '';
 
@@ -28,7 +30,7 @@ export default function HeroSection() {
     const [userImage, setUserImage] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [emailAdd, setEmailAdd]= useState('');
-    emailAddValue = emailAdd;
+    
     console.log(localStorage.getItem('userID'));
     
     const [linkTitle, setLinkTitle] = useState('')
@@ -38,14 +40,44 @@ export default function HeroSection() {
 
     const [listCount, setListCount]= useState('')
 
+    const [showToast, setShowToast] = useState(false);
+    const [toastText,setToastText] = useState('');
+
+    const customToastId = "custom-id-notify";
+    const notifySuccess = () => toast.success(toastText, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        toastId: customToastId
+      });
+
+    useEffect(() => {
+        // emailAddValue = emailAdd;    
+        localStorage.setItem('heroPageEmail', emailAdd);
+    },[emailAdd])
+
+    useEffect(() => {
+        if (showToast) {
+            notifySuccess();
+            // setClickSignIn(false);
+        }
+    }, [toastText]);
+
     const handleClose = () => {
         setShowCreateModal(false);
         setLinkTitle('');
     };
     const handleShow = () => setShowCreateModal(true);
+
     useEffect(() => {
         document.title = 'SocialHub';
       }, []);
+      
     useEffect(() => {
         // This useEffect hook ensures that the Bootstrap JavaScript code is executed
         // after the component is mounted
@@ -132,6 +164,8 @@ export default function HeroSection() {
             setShowLoader(false)
             setLinkTitle('')
             setImageLinkURL('')
+            setShowToast(true);
+            setToastText('Link successfully created!');
         }
         
     },[imageLinkURL])
@@ -181,10 +215,10 @@ export default function HeroSection() {
                                         <span className='headline'>Your One-Stop Link Storage Solution: <span className='headlineHighlight'>Accessible</span> and <span className='headlineHighlight'>Shareable</span></span>
                                         <span className='subHeadline'>Elevate Your Link Management Experience - Store, Share, and Access Your Links with Our Cutting-Edge Storage Solution!</span>
                                         <div className='buttonContainer'>
-                                            <div className="input-group mb-3 buttonContainer-inner">
+                                            <form className="input-group mb-3 buttonContainer-inner" onSubmit={(e) => {e.preventDefault(); setEmailAdd(emailAdd); window.location.href = '/signup'; }}>
                                                 <input type="text" className="form-control emailInput" placeholder="Enter your email..." aria-label="Recipient's username" aria-describedby="button-addon2" value={emailAdd} onChange={(e) => setEmailAdd(e.target.value)}/>
                                                 <Link className="emailInputBtn" href="/signup"><span> Sign up <FontAwesomeIcon className='arrowIcon' icon={faArrowRight} /></span></Link>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +239,7 @@ export default function HeroSection() {
                         </div>
 
                         <div className='footer'>
-                            <span> © 2023 SocialHub | <a href="https://millborneportfolio.vercel.app/" target="_blank">Millborne Galamiton</a> All rights reserved.</span>
+                            <span> © 2023 SocialHub | <a className='portfolioLink' href="https://millborneportfolio.vercel.app/" target="_blank">Millborne Galamiton</a> All rights reserved.</span>
                         </div>
                     </section>
                 </> :
@@ -216,9 +250,107 @@ export default function HeroSection() {
                             
                         </div>
                     </section>   */}
+                    
                     <div className="dashboard">
                         <div className='container dashboard-inner'>
+                            <div className="userNavbarContainer">
+                                <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary navbar-light">
+                                    <div className="container">
+                                        <div className='searchBarDashboard'>
+                                            <form className='searhbarForm'>
+                                                <input type="text" className="form-control searhInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                                                <button className="btn searhBtn" type="submit"><i className='bx bx-search' ></i></button>
+                                                <div className="btnDividerContainer">
+                                                    <div className="btnDivider"></div>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span className="navbar-toggler-icon"></span>
+                                        </button>
+                                        {/* <button classNameName="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            
+                                        </button> */}
+                                        <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                                            <ul className="navbar-nav">
+                                           
+                                                <li className="nav-item">
+                                                {/* <div className="userAccount">
+                                                            
+                                                    <div className="userAccount-inner">
+                                                        <Dropdown className='userDropdownNavbar'>
+                                                            <div className="userImageContainerNavbar">
+                                                            <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
+                                                                <img className='userImageProfileNavbar' src={userImage} alt="" />
+                                                                <span className='userNameDashboardNavbar'>{userName}</span>
+                                                            </Dropdown.Toggle>
+                                                            </div>
+                                                            <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
+                                                            <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                                            </Dropdown.Menu>
+                                                        </Dropdown>
+                                                    </div>
+                                                    </div>  */}
+                                                    <div className="userAccount">
+                                                        <div className="userAccount-inner">
+                                                            <Dropdown className='userDropdownNavbar'>
+                                                                <div className="userImageContainerNavbar">
+                                                                <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
+                                                                    <img className='userImageProfileNavbar' src={userImage} alt="" />
+                                                                    <span className='userNameDashboardNavbar'>{userName}</span>
+                                                                </Dropdown.Toggle>
+                                                                </div>
+                                                                <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
+                                                                <Dropdown.Item onClick={() => {localStorage.setItem('userID', ''); signOut()}}>Logout</Dropdown.Item>
+                                                                </Dropdown.Menu>
+                                                            </Dropdown>
+                                                        </div>
+                                                    </div> 
+                                                </li>
+                                               
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                    </div>
+                                </nav>
+                            </div>
                             <div className="navbarDashboard">
+                                    <div className='headerDashboard'>
+                                        <span>Dashboard</span>
+                                    </div>
+
+                                    {/* <div className='searchBarDashboard'>
+                                        <form className='searhbarForm'>
+                                            <input type="text" className="form-control searhInput" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                                            <button className="btn searhBtn" type="submit"><i className='bx bx-search' ></i></button>
+                                            <div className="btnDividerContainer">
+                                                <div className="btnDivider"></div>
+                                            </div>
+                                        </form>
+                                        
+                                    </div> */}
+
+                                    {/* <div className="userAccount">
+                                    
+                                        <div className="userAccount-inner">
+                                            <Dropdown className='userDropdown'>
+                                                <div className="userImageContainer">
+                                                <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
+                                                    <img className='userImageProfile' src={userImage} alt="" />
+                                                    <span className='userNameDashboard'>{userName}</span>
+                                                </Dropdown.Toggle>
+                                                </div>
+                                                <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
+                                                <Dropdown.Item onClick={() => {localStorage.setItem('userID', ''); signOut()}}>Logout</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        </div>
+                                    </div> */}
+                                </div>
+
+                            {/* <div className="navbarDashboard">
                                     <div className='headerDashboard'>
                                         <span>Dashboard</span>
                                     </div>
@@ -250,7 +382,7 @@ export default function HeroSection() {
                                             </Dropdown>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
 
                                 <div className="totalCreateContainer">
@@ -261,9 +393,10 @@ export default function HeroSection() {
                                         <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create Link</span> </button>
                                     </div>
                                 </div>
+                                <div className='userDashboardDivider'></div>
 
                                 <div className="userLinksContanerDashboard">
-                                    <LinkList setListCount={setListCount}/>
+                                    <LinkList setListCount={setListCount} setToastText={setToastText}/>
                                 </div>
 
                                 <Modal show={showCreateModal} onHide={handleClose} centered>
@@ -292,6 +425,10 @@ export default function HeroSection() {
                     
                     {showLoader && 
                         <Loader/>  
+                    }
+
+                    { showToast &&
+                        <ToastContainer/>
                     }
                              
                 </>

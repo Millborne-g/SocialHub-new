@@ -163,6 +163,13 @@
 
 .socialLinkItemRight{
     display: block;
+    text-decoration: none;
+    /* background-color: aqua; */
+    width: 100%;
+}
+
+.socialLinkItemLeft{
+    /* background-color: rgb(255, 255, 0); */
 }
 
 .socialLinkItemName{

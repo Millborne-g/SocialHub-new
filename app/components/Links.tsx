@@ -11,9 +11,10 @@ interface LinksProps {
   userFormattedDate: string;
   userImageLinkURL: string;
   userLinkUuid: string;
+  setToastText: Function
 }
 
-export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid}: LinksProps) {
+export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid, setToastText}: LinksProps) {
     const [userID, setUserID] = useState(localStorage.getItem('userID'));
     const handleDelete = () => {
         remove(ref(db, `/Links/${userLinkUuid}`));
@@ -31,6 +32,8 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                     if(userLinkUuid === linkUuid){
                         console.log('found '+ linkdateID);
                         remove(ref(db, `/UserLinks/${userID}/${linkdateID}`));
+                        setToastText('Link successfully deleted!');
+                        
                     }
                 }
                 //   console.log(todo.plateNumber)
