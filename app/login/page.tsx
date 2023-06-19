@@ -18,9 +18,9 @@ export default function page() {
         document.title = 'SocialHub | Log in';
       }, []);
     // const router = useRouter();
+    const [userID, setUserID] = useState(localStorage.getItem('userID'));
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userID, setUserID] = useState('')
     const inputEmailElement = document.querySelector('.inputUserEmail');
     const inputPasswordElement = document.querySelector('.inputUserPassword');
     const [clickSignIn, setClickSignIn] = useState(false);
@@ -29,6 +29,12 @@ export default function page() {
     const [toastText,setToastText] = useState('');
 
     const { data } = useSession();
+
+    useEffect(()=>{
+        if(userID){
+          window.open('http://localhost:3000/', '_self');
+        }
+    },[userID])
 
     const customIdPassword = "custom-id-notify";
 
@@ -53,7 +59,79 @@ export default function page() {
 
     
     const proceedNextPage = () =>{
-        console.log('Next Page!!')
+        console.log('Next Page!!');
+        // e.preventDefault();
+        setSignInLoader(true);
+        setClickSignIn(true);
+        let idTemp: string = '';
+        if(email !== ''){
+            onValue(ref(db, `/users`), (snapshot) => {
+                const data = snapshot.val();
+                let foundEmail = false;
+                let foundPassword = false;
+                if (data !== null) {
+                  Object.values(data).map((user) => {
+                    if (typeof user === 'object' && user !== null) {
+                      let userEmail = (user as { email?: string }).email;
+                      let userPassword = (user as { password?: string }).password;
+                      let userIDDB = (user as { ID?: string }).ID;
+                      
+                      if (userEmail === email){
+                        foundEmail = true;
+                        idTemp = userIDDB ?? "";
+                      }
+                      if(userPassword === password){
+                        foundPassword = true;
+                      }
+                    }
+                  });
+                }
+
+                if(foundEmail === false){
+                    setSignInLoader(false);
+                    idTemp = '';
+                    inputEmailElement?.classList.add('is-invalid');
+                    setShowToast(true);
+                    setToastText("Email don't exist.")
+                    // history.replaceState(null, document.title, window.location.href);
+                    setTimeout(() =>{
+                        signOut();
+                    },3000)
+                    
+                } 
+                else if(foundPassword === false){
+                    idTemp = '';
+                    setSignInLoader(false);
+                    inputPasswordElement?.classList.add('is-invalid');
+                    setShowToast(true);
+                    setToastText("Incorrect Password.");
+                    setTimeout(() =>{
+                        signOut();
+                    },3000)
+                }
+                else if(foundEmail && foundPassword){
+                    setSignInLoader(true);
+                    setTimeout(() => {
+                        console.log('yeeey sulod naka');
+                        localStorage.setItem('userID', idTemp);
+                        console.log('mao ning id '+ idTemp);
+                        
+                        
+                        console.log(localStorage.getItem('userID'));
+                        // window.location.href = 'http://localhost:3000/';
+                        window.open('http://localhost:3000/', '_self');
+                        setSignInLoader(false);
+                        
+                    },3000);
+                } 
+                else{
+                    setSignInLoader(false);
+                }
+            });  
+        } 
+        else{
+            setSignInLoader(false);
+        }
     }
 
     const handleSubmit = (e: any) =>{
@@ -129,13 +207,11 @@ export default function page() {
           console.log(data?.user?.name);
           setEmail(data.user.email);
           
-          if(email != ''){
+          if(email !== ''){
             setTimeout(() => {
             console.log('yeeey sulod naka');
                 proceedNextPage()
                 setSignInLoader(false);
-                
-                        
             },3000);
             
           }

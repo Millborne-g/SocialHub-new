@@ -630,6 +630,11 @@ a {
 
  /* Dashboard */
 
+.dashboard{
+  /* background-color: #FAFAFC; */
+  height: 100%;
+ }
+
 .navbarDashboard{
   /* background-color: #0B63F8; */
   display: flex;

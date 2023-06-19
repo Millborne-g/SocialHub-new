@@ -26,6 +26,7 @@ export default function page() {
   useEffect(() => {
     document.title = 'SocialHub | Sign up';
   }, []);
+  const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [email, setEmail] = useState(emailAddValue); 
   const inputUserEmailElement = document.querySelector('.inputUserEmail');
   const [name, setName] = useState("");
@@ -46,6 +47,12 @@ export default function page() {
   const [clickSignUp, setClickSignUp] = useState(false);
 
   const { data } = useSession();
+
+  useEffect(()=>{
+    if(userID){
+      window.open('http://localhost:3000/', '_self');
+    }
+  },[userID])
   
   const customIdPassword = "custom-id-password";
   const customIdAlreadyExist = "custom-id-AlreadyExist";
@@ -71,6 +78,8 @@ export default function page() {
   //     progress: undefined,
   //     theme: "light",
   //     });
+
+
 
   useEffect(() => {
       // Check if the 'signedOut' key exists in sessionStorage
@@ -119,10 +128,15 @@ export default function page() {
   // console.log(emailT);
 
 
+  const submit_to_DB_Google = () => {
+
+  }
+
   //write
     const submit_to_DB = () =>{
       const test = 'test';
       const uuid = uid();
+      let idTemp: string = '';
       let emailExist: boolean = false;
       // if(fName !== '' && lName !== ''){
       //   setName(fName+' '+lName);
@@ -140,10 +154,12 @@ export default function page() {
               setSignUpLoader(true);
               if (typeof user === 'object' && user !== null) {
                 let userEmail = (user as { email?: string }).email;
+                let userTempID = (user as {ID?: string}).ID;
                 if (userEmail === email){
+                  
                   emailExist=true;
                   setSignUpGoogle(false)
-                  console.log(emailExist)
+                  console.log('userTempID ---------'+userTempID)
                   
                 }
               }
@@ -152,7 +168,8 @@ export default function page() {
           if(emailExist === false){
             setSignUpLoader(true);
             setTimeout(() => {
-              console.log('saving '+emailExist)
+              console.log('saving '+emailExist);
+              
               set(ref(db, `/users/${uuid+nameSplit}`), {
                 imageLink,
                 email,
@@ -165,7 +182,15 @@ export default function page() {
               // alert('Saved to Database');
               setSignUpSuccessfulModal(true);
               setToastConfirmPassword(false);
+              // setTimeout(() =>{
+              //   window.open('http://localhost:3000/', '_self');
+              // }, 2000)
+              localStorage.setItem('userID', uuid+nameSplit);
+              setUserID(localStorage.getItem('userID'));
+              
             }, 3000);
+            
+            // 
             
           } else{
             inputUserEmailElement?.classList.add('is-invalid');
@@ -197,11 +222,6 @@ export default function page() {
       }
       
     }
-    // else {
-    //   if (!data){
-    //     signOut()
-    //   }
-      
     // }
   },[data]);
 
