@@ -17,6 +17,7 @@ import Links from './components/Links';
 import {db,storage} from '../firebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, StorageReference } from "firebase/storage";
+import {useSession, signIn, signOut} from 'next-auth/react';
 import { uid } from 'uid';
 
 export let emailAddValue = '';
@@ -26,14 +27,16 @@ export default function HeroSection() {
     const [userName, setUserName] = useState('');
     const [userImage, setUserImage] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [emailAdd, setEmailAdd]= useState('')
+    const [emailAdd, setEmailAdd]= useState('');
     emailAddValue = emailAdd;
     console.log(localStorage.getItem('userID'));
     
     const [linkTitle, setLinkTitle] = useState('')
     const [selectedFile, setSelectedFile] = useState<File | null>(null);;
     const [imageLinkURL, setImageLinkURL] = useState('');
-    const [showLoader, setShowLoader] = useState(false)
+    const [showLoader, setShowLoader] = useState(false);
+
+    const [listCount, setListCount]= useState('')
 
     const handleClose = () => {
         setShowCreateModal(false);
@@ -54,30 +57,30 @@ export default function HeroSection() {
 
     useEffect(() =>{
         if(userID){
-            if(userID){
-                onValue(ref(db, `/users/${userID}`), (snapshot) => {
-                    // setUserLinkList([]);
-                    const data = snapshot.val();
-                    if (data !== null) {
-                        const reversedData = Object.values(data).reverse();
-                        reversedData.map((linkDetails) => {
-                            if (typeof linkDetails === 'object' && linkDetails !== null) {
-                            let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
-                            let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
-                            let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
-                            // setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
-                            }
-                        });
+           
+            onValue(ref(db, `/users/${userID}`), (snapshot) => {
+                // setUserLinkList([]);
+                const data = snapshot.val();
+                if (data !== null) {
+                    const reversedData = Object.values(data).reverse();
+                    reversedData.map((linkDetails) => {
+                        if (typeof linkDetails === 'object' && linkDetails !== null) {
+                        let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
+                        let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
+                        let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
+                        // setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
+                        }
+                    });
 
-                        let userFullName = data.name;
-                        let userImage = data.imageLink;
+                    let userFullName = data.name;
+                    let userImage = data.imageLink;
 
-                        setUserName(userFullName);
-                        setUserImage(userImage);
+                    setUserName(userFullName);
+                    setUserImage(userImage);
                         
-                  }
-                });
-            }
+              }
+            });
+            
         }
     },[userID])
 
@@ -110,7 +113,8 @@ export default function HeroSection() {
                 linkTitle,
                 imageLinkURL,
                 formattedDate,
-                uuid
+                uuid,
+                dateID:formattedTitleDateTime+'_'+uuid
             });
             
             set(ref(db, `/Links/${uuid}`), {
@@ -159,6 +163,8 @@ export default function HeroSection() {
 
         // alert('Saved to Database');
     }
+
+    
 
     
     return (
@@ -233,7 +239,7 @@ export default function HeroSection() {
                                             </Dropdown.Toggle>
                                             </div>
                                             <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                            <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {localStorage.setItem('userID', ''); signOut()}}>Logout</Dropdown.Item>
                                             </Dropdown.Menu>
                                         </Dropdown>
                                     </div>
@@ -244,14 +250,14 @@ export default function HeroSection() {
                             <div className="totalCreateContainer">
                                 <div className="totalCreateContainer-inner">
                                     <div className="totalContainer">
-                                        <span>Total 30 links</span>
+                                        <span>Total {listCount} links</span>
                                     </div>
-                                    <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span><i className='bx bx-plus' ></i>Create Link</span> </button>
+                                    <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create Link</span> </button>
                                 </div>
                             </div>
 
                             <div className="userLinksContanerDashboard">
-                                <LinkList />
+                                <LinkList setListCount={setListCount}/>
                             </div>
 
                             <Modal show={showCreateModal} onHide={handleClose} centered>

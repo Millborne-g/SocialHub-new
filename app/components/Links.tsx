@@ -1,6 +1,11 @@
-import React from 'react';
+"use client"
+
+import React, { createContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Dropdown } from 'react-bootstrap'; 
+import {db,storage} from '../../firebase';
+import { onValue, ref, remove, set, update } from 'firebase/database';
+import { connectStorageEmulator } from 'firebase/storage';
 interface LinksProps {
   userLinkTitle: string;
   userFormattedDate: string;
@@ -9,6 +14,31 @@ interface LinksProps {
 }
 
 export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid}: LinksProps) {
+    const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    const handleDelete = () => {
+        remove(ref(db, `/Links/${userLinkUuid}`));
+
+        onValue(ref(db, `/UserLinks/${userID}`), (snapshot) => {
+            // setTodos([]);
+            
+            const data = snapshot.val();
+            if (data !== null) {
+              Object.values(data).map((linkTimeDate) => {
+                if(typeof linkTimeDate === 'object' && linkTimeDate !== null){
+                    let linkUuid = (linkTimeDate as {uuid?: String}).uuid
+                    let linkdateID = (linkTimeDate as{dateID?: String}).dateID;
+                    
+                    if(userLinkUuid === linkUuid){
+                        console.log('found '+ linkdateID);
+                        remove(ref(db, `/UserLinks/${userID}/${linkdateID}`));
+                    }
+                }
+                //   console.log(todo.plateNumber)
+                // setTodos((oldArray) => [...oldArray, todo]);
+              });
+            }
+        });
+    };
   return (
     <>
         <div className="userLinksContaner">
@@ -37,7 +67,7 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                                 </div>
                                 <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
                                     <Dropdown.Item href={`/${userLinkUuid}`}>Edit</Dropdown.Item>
-                                    <Dropdown.Item href="#">Delete</Dropdown.Item>
+                                    <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         

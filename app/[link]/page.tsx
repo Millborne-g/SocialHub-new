@@ -40,12 +40,24 @@ export default function linkDetails() {
   const handleShow = () => setShowCreateModal(true);
 
   const submit_Social_to_DB = () =>{
+    const currentDate = new Date();
+    // title date and time
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    // end title date and time
+  
+    const formattedTitleDateTime = `${year}-${month}-${day}_${hours}:${minutes}:${seconds}`;
     if(socialTitle && socialLink){
       const uuid = uid();
-      set(ref(db, `/Links/${linkID}/socialLinks/${uuid}`), {
+      set(ref(db, `/Links/${linkID}/socialLinks/${formattedTitleDateTime}_${uuid}`), {
         socialTitle,
         socialLink,
-        uuid
+        uuid,
+        dateTimeID: formattedTitleDateTime+'_'+uuid
       });
       setSocialTitle('');
       setSocialLink('');
@@ -54,44 +66,12 @@ export default function linkDetails() {
     
   }
 
-  // useEffect(() =>{
-  //   if(userID){
-  //       if(userID){
-  //           onValue(ref(db, `/users/${userID}`), (snapshot) => {
-  //               // setUserLinkList([]);
-  //               const data = snapshot.val();
-  //               if (data !== null) {
-  //                   const reversedData = Object.values(data).reverse();
-  //                   reversedData.map((linkDetails) => {
-  //                       if (typeof linkDetails === 'object' && linkDetails !== null) {
-  //                       let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
-  //                       let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
-  //                       let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
-  //                       // setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
-  //                       }
-  //                   });
-
-  //                   let userFullName = data.name;
-  //                   let userImage = data.imageLink;
-
-  //                   // setUserName(userFullName);
-  //                   // setUserImage(userImage);
-  //             }
-  //           });
-  //       }
-  //   }
-  // },[userID]);
-
   useEffect(() =>{
     var currentURL = window.location.href;
     var urlParts = currentURL.split('/');
     var lastItem = urlParts[urlParts.length - 1];
     console.log(lastItem);
     setLinkID(lastItem);
-
-
-    
-
   },[]);
 
   useEffect(() =>{

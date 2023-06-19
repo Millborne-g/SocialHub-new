@@ -112,7 +112,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 5s ease-in-out;
+    /* transition: 5s ease-in-out; */
   }
 
   .popup-inner{
