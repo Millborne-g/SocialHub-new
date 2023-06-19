@@ -5,9 +5,10 @@ interface LinksProps {
   userLinkTitle: string;
   userFormattedDate: string;
   userImageLinkURL: string;
+  userLinkUuid: string;
 }
 
-export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL }: LinksProps) {
+export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid}: LinksProps) {
   return (
     <>
         <div className="userLinksContaner">
@@ -35,7 +36,7 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                                     </Dropdown.Toggle>
                                 </div>
                                 <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                    <Dropdown.Item href="#">Edit</Dropdown.Item>
+                                    <Dropdown.Item href={`/${userLinkUuid}`}>Edit</Dropdown.Item>
                                     <Dropdown.Item href="#">Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

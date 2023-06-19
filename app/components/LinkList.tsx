@@ -19,7 +19,8 @@ export default function LinkList() {
                     let userLinkTitle = (linkDetails as { linkTitle?: string }).linkTitle;
                     let userFormattedDate = (linkDetails as { formattedDate?: string }).formattedDate;
                     let userImageLinkURL = (linkDetails as { imageLinkURL?: string }).imageLinkURL;
-                    setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL]]);  
+                    let userLinkUuid = (linkDetails as { uuid?: string }).uuid;
+                    setUserLinkList((oldArray:any) => [...oldArray, [userLinkTitle, userFormattedDate, userImageLinkURL, userLinkUuid]]);  
                     }
                 });
           }
@@ -31,7 +32,7 @@ export default function LinkList() {
 
     <>
         {userLinkList.map((linkDetails, index) => (
-            <Links key={index} userLinkTitle={linkDetails[0]} userFormattedDate={linkDetails[1]} userImageLinkURL={linkDetails[2]}/>
+            <Links key={index} userLinkTitle={linkDetails[0]} userFormattedDate={linkDetails[1]} userImageLinkURL={linkDetails[2]} userLinkUuid={linkDetails[3]}/>
         ))}
     
     </>

@@ -35,7 +35,10 @@ export default function HeroSection() {
     const [imageLinkURL, setImageLinkURL] = useState('');
     const [showLoader, setShowLoader] = useState(false)
 
-    const handleClose = () => setShowCreateModal(false);
+    const handleClose = () => {
+        setShowCreateModal(false);
+        setLinkTitle('');
+    };
     const handleShow = () => setShowCreateModal(true);
     useEffect(() => {
         document.title = 'SocialHub';
