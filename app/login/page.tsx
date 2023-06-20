@@ -23,8 +23,17 @@ export default function page() {
     const [userID, setUserID] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const inputEmailElement = document.querySelector('.inputUserEmail');
-    const inputPasswordElement = document.querySelector('.inputUserPassword');
+    // const inputEmailElement = document.querySelector('.inputUserEmail');
+    let inputEmailElement: any;
+    if (typeof document !== 'undefined') {
+        inputEmailElement = document.querySelector('.inputUserEmail');
+    }
+    // const inputPasswordElement = document.querySelector('.inputUserPassword');
+    let inputPasswordElement: any;
+    if (typeof document !== 'undefined') {
+        inputPasswordElement = document.querySelector('.inputUserEmail');
+    }
+
     const [clickSignIn, setClickSignIn] = useState(false);
     const [signInLoader, setSignInLoader] = useState(false);
     const [showToast, setShowToast] = useState(false);
