@@ -18,7 +18,9 @@ export default function page() {
         document.title = 'SocialHub | Log in';
       }, []);
     // const router = useRouter();
-    const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    
+
+    const [userID, setUserID] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const inputEmailElement = document.querySelector('.inputUserEmail');
@@ -29,6 +31,13 @@ export default function page() {
     const [toastText,setToastText] = useState('');
 
     const { data } = useSession();
+
+    useEffect(() => {
+        const storedUserID = localStorage.getItem('userID');
+        if (storedUserID) {
+          setUserID(storedUserID);
+        }
+      }, []);
 
     useEffect(()=>{
         if(userID){
