@@ -65,7 +65,7 @@ export default function page() {
 
   useEffect(()=>{
     if(userID){
-      window.open('http://localhost:3000/', '_self');
+      window.open('https://social-hub-new.vercel.app/', '_self');
     }
   },[userID])
   

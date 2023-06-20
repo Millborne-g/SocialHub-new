@@ -63,7 +63,7 @@ export default function Navbar() {
     <header>
         <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
             <div className="container">
-                <a className="navbar-brand" href="http://localhost:3000/">
+                <a className="navbar-brand" href="https://social-hub-new.vercel.app/">
                     <img className='logoImg' src={logo.src} alt="" />
                     <span className='logoName'>SocialHub</span> 
                 </a>

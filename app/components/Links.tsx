@@ -47,7 +47,7 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
 
     const handleCopyBtn =() =>{
         try {
-            navigator.clipboard.writeText(`http://localhost:3000/${userLinkUuid}`);
+            navigator.clipboard.writeText(`https://social-hub-new.vercel.app/${userLinkUuid}`);
             console.log('Content copied successfully!');
             setCopyClicked(true);
             setToastText('Link copied!');

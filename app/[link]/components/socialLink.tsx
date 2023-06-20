@@ -39,7 +39,7 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, se
                   // console.log('found '+linkdateID);
                   remove(ref(db, `/Links/${linkID}/socialLinks/${linkdateID}`));
                   setToastText('Social successfully deleted!');
-                  window.open(`http://localhost:3000/${linkID}`, '_self');
+                  window.open(`https://social-hub-new.vercel.app/${linkID}`, '_self');
                 }
             }
             //   console.log(todo.plateNumber)

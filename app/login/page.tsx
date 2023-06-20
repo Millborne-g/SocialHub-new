@@ -38,7 +38,7 @@ export default function page() {
 
     useEffect(()=>{
         if(userID){
-          window.open('http://localhost:3000/', '_self');
+          window.open('https://social-hub-new.vercel.app/', '_self');
         }
     },[userID])
 
@@ -126,7 +126,7 @@ export default function page() {
                         
                         console.log(localStorage.getItem('userID'));
                         // window.location.href = 'http://localhost:3000/';
-                        window.open('http://localhost:3000/', '_self');
+                        window.open('https://social-hub-new.vercel.app/', '_self');
                         // setSignInLoader(false);
                         
                     },3000);
@@ -195,7 +195,7 @@ export default function page() {
                         setSignInLoader(false);
                         // console.log(localStorage.getItem('userID'));
                         // window.location.href = 'http://localhost:3000/';
-                        window.open('http://localhost:3000/', '_self');
+                        window.open('https://social-hub-new.vercel.app/', '_self');
                         
                     },3000);
                 } 
