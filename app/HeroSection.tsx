@@ -388,7 +388,7 @@ export default function HeroSection() {
                                         <div className="totalContainer">
                                             <span>Total {listCount} links</span>
                                         </div>
-                                        <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create link</span> </button>
+                                        <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create Link</span> </button>
                                     </div>
                                 </div>
                                 <div className='userDashboardDivider'></div>
