@@ -24,6 +24,13 @@ export default function Navbar() {
     }
   }, []);
 
+  useEffect(() => {
+    const storedUserID = localStorage.getItem('userID');
+    if (storedUserID) {
+      setUserID(storedUserID);
+    }
+  }, []);
+
   useEffect(() =>{
     if(userID){
         if(userID){
