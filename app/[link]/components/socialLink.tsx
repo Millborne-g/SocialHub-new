@@ -4,6 +4,8 @@ import { Dropdown, Button, Modal  } from 'react-bootstrap';
 import {db,storage} from '../../../firebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
+import noImage from '../../../assets/no-image.svg';
+
 interface SocialLinkProps {
   userLinkTitle: string,
   userLinkUrl: string,
@@ -19,10 +21,9 @@ interface SocialLinkProps {
 export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, setToastText, setShowEditSocialModal, setEditSocialTitle, setLinkSocialLink, setEditSocialID}:SocialLinkProps) {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [linkID, setLinkID] = useState('');
+  const [logoSocial, setLogoSocial] = useState('');
 
   const handleDelete = () => {
-    
-
     onValue(ref(db, `/Links/${linkID}/socialLinks`), (snapshot) => {
         // setTodos([]);
         
@@ -54,12 +55,41 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, se
     console.log(lastItem);
     setLinkID(lastItem);
   },[]);
+  
   //href={userLinkUrl} target='_blank'
+
+  useEffect(() => {
+    const checkImageExists = async () => {
+      if (userLinkUrl) {
+        const url = new URL(userLinkUrl);
+        const domain = url.hostname;
+        const imageUrl = `https://logo.clearbit.com/${domain}`;
+
+        const img = new Image();
+        img.src = imageUrl;
+        img.onerror = () => {
+          setLogoSocial(noImage.src);
+          console.log('Image not found');
+          
+        };
+        img.onload = () => {
+          console.log('Image loaded');
+          setLogoSocial(imageUrl);
+        };
+      }
+    };
+
+    checkImageExists();
+  }, []);
   return (
     <>
         <div className="socialLinkItem" >
           <div className="socialLinkItem-inner">
+            
             <a className="socialLinkItemRight" href={userLinkUrl} target='_blank'>
+              <div className="socialImageContainer">
+                <img className='socialImage' src={logoSocial}/>
+              </div>
               <span className='socialLinkItemName'>{userLinkTitle}</span> <br />
               <span className='socialLinkItemLink'>{userLinkUrl}</span>
             </a>
@@ -69,7 +99,7 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, se
               <Dropdown className='userDropdownLinks'>
                   <div className="userDotsContainer">
                       <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
-                          <span className='userLinkBtnIcon'>⋮</span>    
+                          <span className='userItemLinkBtnIcon'>⋮</span>    
                       </Dropdown.Toggle>
                   </div>
                   <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">

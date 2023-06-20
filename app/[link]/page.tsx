@@ -311,6 +311,17 @@ export default function linkDetails() {
     }
   }
 
+  // useEffect(() =>{
+  //   const itemContainer = document.querySelector('.socialLinkItemContainer');
+  //   if(socialLinkList.length===2){
+      
+  //     itemContainer?.classList.add('twoItems');
+  //     console.log('sddddddddddddddddddddddddddddddd');
+  //   } else{
+  //     itemContainer?.classList.remove('twoItems');
+  //   }
+  // },[socialLinkList])
+
   return (
     <>
       <Navbar />

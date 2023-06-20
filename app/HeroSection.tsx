@@ -250,9 +250,9 @@ export default function HeroSection() {
                             
                         </div>
                     </section>   */}
-                    
-                    <div className="dashboard">
-                        <div className='container dashboard-inner'>
+                    <Navbar/>
+                    <div className="container dashboard">
+                        <div className='dashboard-inner'>
                             {/* <div className="userNavbarContainer">
                                 <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary navbar-light">
                                     <div className="container">
@@ -299,7 +299,7 @@ export default function HeroSection() {
                                     </div>
                                 </nav>
                             </div> */}
-                            <Navbar/>
+                            
 
                             <div className="navbarDashboard">
                                     <div className='headerDashboard'>
