@@ -12,7 +12,7 @@ import {useSession, signIn, signOut} from 'next-auth/react';
 
 // export default function Navbar({ setShowNavbar }: { setShowNavbar: React.Dispatch<React.SetStateAction<boolean>> }) {
 export default function Navbar() {
-  const [userID, setUserID] = useState(localStorage.getItem('userID'));
+  const [userID, setUserID] = useState('');
   const [userName, setUserName] = useState('');
   const [userImage, setUserImage] = useState('');
   useEffect(() => {
@@ -21,6 +21,13 @@ export default function Navbar() {
     if (typeof window !== 'undefined') {
       // Check if window is defined to avoid server-side rendering issues
       require('bootstrap/dist/js/bootstrap.bundle.min.js');
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+    if (storedUserID) {
+      setUserID(storedUserID);
     }
   }, []);
 

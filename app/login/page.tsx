@@ -18,17 +18,23 @@ export default function page() {
         document.title = 'SocialHub | Log in';
       }, []);
     // const router = useRouter();
-    const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    const [userID, setUserID] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const inputEmailElement = document.querySelector('.inputUserEmail');
-    const inputPasswordElement = document.querySelector('.inputUserPassword');
+    const inputEmailElement = typeof document !== 'undefined' ? document.querySelector('.inputUserEmail'): null;
+    const inputPasswordElement = typeof document !== 'undefined' ? document.querySelector('.inputUserPassword'): null;
     const [clickSignIn, setClickSignIn] = useState(false);
     const [signInLoader, setSignInLoader] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastText,setToastText] = useState('');
 
     const { data } = useSession();
+    useEffect(() => {
+        const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+        if (storedUserID) {
+          setUserID(storedUserID);
+        }
+      }, []);
 
     useEffect(()=>{
         if(userID){
@@ -79,10 +85,11 @@ export default function page() {
                       if (userEmail === email){
                         foundEmail = true;
                         idTemp = userIDDB ?? "";
+                        if(userPassword === password){
+                            foundPassword = true;
+                          }
                       }
-                      if(userPassword === password){
-                        foundPassword = true;
-                      }
+                      
                     }
                   });
                 }
@@ -154,10 +161,12 @@ export default function page() {
                       if (userEmail === email){
                         foundEmail = true;
                         idTemp = userIDDB ?? "";
+                        if(userPassword === password){
+                            foundPassword = true;
+                            console.log(password+'------'+userPassword);
+                          }
                       }
-                      if(userPassword === password){
-                        foundPassword = true;
-                      }
+                      
                     }
                   });
                 }
@@ -176,7 +185,7 @@ export default function page() {
                     setShowToast(true);
                     setToastText("Incorrect Password.");
                 }
-                else if(foundEmail && foundPassword){
+                else if(foundEmail===true && foundPassword===true){
                     setSignInLoader(true);
                     setTimeout(() => {
                         console.log('yeeey sulod naka');
@@ -184,7 +193,7 @@ export default function page() {
                         console.log('mao ning id '+ idTemp);
                         
                         setSignInLoader(false);
-                        console.log(localStorage.getItem('userID'));
+                        // console.log(localStorage.getItem('userID'));
                         // window.location.href = 'http://localhost:3000/';
                         window.open('http://localhost:3000/', '_self');
                         

@@ -26,9 +26,9 @@ export default function page() {
   useEffect(() => {
     document.title = 'SocialHub | Sign up';
   }, []);
-  const [userID, setUserID] = useState(localStorage.getItem('userID'));
-  const [email, setEmail] = useState(localStorage.getItem('heroPageEmail')?? ''); 
-  const inputUserEmailElement = document.querySelector('.inputUserEmail');
+  const [userID, setUserID] = useState('');
+  const [email, setEmail] = useState(''); 
+  const inputUserEmailElement = typeof document !== 'undefined' ? document.querySelector('.inputUserEmail') : null;
   const [name, setName] = useState("");
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
@@ -37,7 +37,7 @@ export default function page() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [imageLink, setImageLink] = useState('')
-  const confirmPasswordElement = document.querySelector('.confirm-password');
+  const confirmPasswordElement = typeof document !== 'undefined' ? document.querySelector('.confirm-password') : null;
   const [passwordDontMatch, setPasswordDontMatch] = useState(false);
   const [toastConfirmPassword, setToastConfirmPassword] = useState(false);
   const [toastAlreadyExist, setToastAlreadyExist] = useState('')
@@ -47,6 +47,21 @@ export default function page() {
   const [clickSignUp, setClickSignUp] = useState(false);
 
   const { data } = useSession();
+
+  useEffect(() => {
+    const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+    if (storedUserID) {
+      setUserID(storedUserID);
+    }
+    const heroPageEmail = typeof window !== 'undefined' ? localStorage.getItem('heroPageEmail') : null;
+    if (heroPageEmail) {
+      setEmail(heroPageEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    
+  }, []);
 
   useEffect(()=>{
     if(userID){
@@ -185,7 +200,7 @@ export default function page() {
             //   window.open('http://localhost:3000/', '_self');
             // }, 2000)
             localStorage.setItem('userID', uuid+nameSplit);
-            setUserID(localStorage.getItem('userID'));
+            setUserID(localStorage.getItem('userID')??'');
             
           }, 3000);
           
@@ -201,7 +216,7 @@ export default function page() {
           setSignUpLoader(true);
           setTimeout(() =>{
             localStorage.setItem('userID', idTemp);
-            setUserID(localStorage.getItem('userID'));
+            setUserID(localStorage.getItem('userID')??'');
           }, 3000)
         }
       });  
@@ -262,7 +277,7 @@ export default function page() {
               //   window.open('http://localhost:3000/', '_self');
               // }, 2000)
               localStorage.setItem('userID', uuid+nameSplit);
-              setUserID(localStorage.getItem('userID'));
+              setUserID(localStorage.getItem('userID')??'');
               
             }, 3000);
             

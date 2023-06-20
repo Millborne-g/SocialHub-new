@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../components/Loader';
 
 export default function linkDetails() {
-  const [userID, setUserID] = useState(localStorage.getItem('userID'));
+  const [userID, setUserID] = useState('');
   const [userName, setUserName] = useState('');
   const [userImage, setUserImage] = useState('');
 
@@ -55,6 +55,13 @@ export default function linkDetails() {
   const customToastId = "custom-id-notify";
 
   const [linkEmpty, setLinkEmpty] = useState(false);
+  
+  useEffect(() => {
+    const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+    if (storedUserID) {
+      setUserID(storedUserID);
+    }
+  }, []);
 
   useEffect(() => {
     document.title = linkTitle;

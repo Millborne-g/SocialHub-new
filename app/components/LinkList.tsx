@@ -11,9 +11,14 @@ interface props {
 }
 
 export default function LinkList({setListCount, setToastText, setShowToast}:props) {
-  const [userID, setUserID] = useState(localStorage.getItem('userID'));
+  const [userID, setUserID] = useState('');
   const [userLinkList, setUserLinkList] = useState<any[]>([]);
-
+  useEffect(() => {
+    const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+    if (storedUserID) {
+      setUserID(storedUserID);
+    }
+  }, []);
   useEffect(() =>{
     if(userID){
         onValue(ref(db, `/UserLinks/${userID}`), (snapshot) => {

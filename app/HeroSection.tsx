@@ -25,13 +25,11 @@ import 'react-toastify/dist/ReactToastify.css';
 export let emailAddValue = '';
 
 export default function HeroSection() {
-    const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    const [userID, setUserID] = useState('');
     const [userName, setUserName] = useState('');
     const [userImage, setUserImage] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [emailAdd, setEmailAdd]= useState('');
-    
-    console.log(localStorage.getItem('userID'));
     
     const [linkTitle, setLinkTitle] = useState('')
     const [selectedFile, setSelectedFile] = useState<File | null>(null);;
@@ -44,6 +42,14 @@ export default function HeroSection() {
     const [toastText,setToastText] = useState('');
 
     const customToastId = "custom-id-notify";
+
+    useEffect(() => {
+        const storedUserID = typeof window !== 'undefined' ? localStorage.getItem('userID') : null;
+        if (storedUserID) {
+          setUserID(storedUserID);
+        }
+      }, []);
+
     const notifySuccess = () => toast.success(toastText, {
         position: "top-center",
         autoClose: 5000,
