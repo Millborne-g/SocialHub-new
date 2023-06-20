@@ -388,7 +388,7 @@ export default function HeroSection() {
                                         <div className="totalContainer">
                                             <span>Total {listCount} links</span>
                                         </div>
-                                        <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create Link</span> </button>
+                                        <button type="button" className="btn btn-primary createLinkBtn" onClick={handleShow}> <span>+ Create link storage</span> </button>
                                     </div>
                                 </div>
                                 <div className='userDashboardDivider'></div>
@@ -399,7 +399,7 @@ export default function HeroSection() {
 
                                 <Modal show={showCreateModal} onHide={handleClose} centered>
                                     <Modal.Header closeButton>
-                                    <Modal.Title>Create a Link</Modal.Title>
+                                    <Modal.Title>Create Link Storage</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <form>
