@@ -14,13 +14,23 @@ import { Dropdown, Button, Modal  } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Loader from '../components/Loader';
+
 export default function linkDetails() {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [userName, setUserName] = useState('');
   const [userImage, setUserImage] = useState('');
 
   const [linkTitle, setLinkTitle] = useState('');
+  const [linkEditTitle, setLinkEditTitle] = useState('');
   const [linkImageURL, setLinkImageURL] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);;
+  const [linkEditImageURL, setLinkEditImageURL] = useState('');
+  
+  const [editSocialTitle, setEditSocialTitle] = useState('');
+  const [editSocialLink, setLinkSocialLink] = useState('');
+  const [editSocialID, setEditSocialID] = useState('');
+
   const [linkUserID, setLinkUserID] = useState('');
   const [linkUserImage, setLinkUserImage] = useState('');
   const [linkUserName, setLinkUserName] = useState('');
@@ -31,11 +41,16 @@ export default function linkDetails() {
 
   const [showCreateModal, setShowCreateModal] = useState(false);
 
+  const [showEditHeaderModal, setShowEditHeaderModal] = useState(false);
+  const [showEditSocialModal, setShowEditSocialModal] = useState(false);
+
   const [socialTitle, setSocialTitle] = useState('')
   const [socialLink, setSocialLink] = useState('')
 
   const [showToast, setShowToast] = useState(false);
   const [toastText,setToastText] = useState('');
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const customToastId = "custom-id-notify";
 
@@ -68,6 +83,23 @@ export default function linkDetails() {
     setSocialLink('');
   };
   const handleShow = () => setShowCreateModal(true);
+
+
+  const handleEditHeaderClose = () => {
+    setShowEditHeaderModal(false);
+  };
+  const handleEditHeaderShow = () => {
+    setShowEditHeaderModal(true);
+    setLinkEditTitle(linkTitle);
+  };
+
+  const handleEditSocialClose = () => {
+    setShowEditSocialModal(false);
+  };
+  const handleEditSocialShow = () => {
+    setShowEditSocialModal(true);
+    // setLinkEditTitle(linkTitle);
+  };
 
   const submit_Social_to_DB = () =>{
     const currentDate = new Date();
@@ -155,9 +187,129 @@ export default function linkDetails() {
         }
       });
     }
-  },[linkID])
+  },[linkID]);
 
-  
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  useEffect(() =>{
+    
+    if(linkEditImageURL && linkEditTitle){
+      // UserLink
+      onValue(ref(db, `/UserLinks/${userID}`), (snapshot) => {
+        // setUserLinkList([]);
+        const data = snapshot.val();
+        if (data !== null) {
+          Object.values(data).forEach((dateTimeID) => {
+            if(dateTimeID){
+              let tempDBDateID = (dateTimeID as {dateID?: string}).dateID;
+              let tempDBLinkID = (dateTimeID as {uuid?: string}).uuid;
+              // console.log('ssssssssssssssssssssssssssss'+tempdateID);
+              if(linkID === tempDBLinkID){
+                console.log('founnndddddd');
+                update(ref(db, `/UserLinks/${userID}/${tempDBDateID}`), {
+                  linkTitle: linkEditTitle,
+                  imageLinkURL: linkEditImageURL
+                });
+                //Links
+                update(ref(db, `/Links/${linkID}`), {
+                  linkTitle: linkEditTitle,
+                  imageLinkURL: linkEditImageURL
+                });
+              }
+              
+              }
+            
+              // console.log(todo.plateNumber)
+            // setTodos((oldArray) => [...oldArray, todo]);
+          });
+          
+      }});
+    
+      setShowLoader(false);
+      setShowToast(true);
+      setToastText('Link successfully updated!');
+      setTimeout(() =>{
+        window.location.reload();
+      },2000);
+      
+    } else{
+      setShowLoader(false);
+      // setShowToast(true);
+      // setToastText('Link title must be filled');
+    }
+  },[linkEditImageURL])
+
+   //update
+  const handleEditHeader = () => {
+        setShowEditHeaderModal(false);
+        setShowLoader(true);
+        
+        if (selectedFile && linkEditTitle) {
+          const test = 'test';
+          // const storageRefImage = storageRef(storage);
+          
+          const fileRef: StorageReference = storageRef(storage, selectedFile.name);
+
+          uploadBytes(fileRef, selectedFile)
+              .then((snapshot) => getDownloadURL(snapshot.ref))
+              .then((url) => {
+                setLinkEditImageURL(url);
+              })
+              .catch((error) => {
+                  console.error('Error uploading image:', error);
+              });
+      } else{
+        setLinkEditImageURL(linkImageURL);
+      }
+  };
+
+  const handleEditSocial = () => {
+    setShowEditSocialModal(false);
+    if(editSocialTitle && editSocialLink){
+      setShowLoader(true);
+      onValue(ref(db, `/Links/${linkID}/socialLinks`), (snapshot) => {
+        // setUserLinkList([]);
+        const data = snapshot.val();
+        if (data !== null) {
+          Object.values(data).forEach((dateTimeID) => {
+            if(dateTimeID){
+              
+              let tempDBSocialID = (dateTimeID as {uuid?: string}).uuid;
+              let tempDBDateTimeID = (dateTimeID as {dateTimeID?: string}).dateTimeID;
+
+              // console.log('ssssssssssssssssssssssssssss'+tempdateID);
+              if(tempDBSocialID === editSocialID){
+                // console.log('Found '+tempDBDateTimeID)
+                // console.log('founnndddddd');
+                update(ref(db, `/Links/${linkID}/socialLinks/${tempDBDateTimeID}`), {
+                  socialTitle: editSocialTitle,
+                  socialLink: editSocialLink
+                });
+                // //Links
+                // update(ref(db, `/Links/${linkID}`), {
+                //   linkTitle: linkEditTitle,
+                //   imageLinkURL: linkEditImageURL
+                // });
+              }
+              
+              }
+            
+              // console.log(todo.plateNumber)
+            // setTodos((oldArray) => [...oldArray, todo]);
+          });
+          
+      }});
+      setShowLoader(false);
+      setShowToast(true);
+      setToastText('Social successfully updated!');
+      setTimeout(() =>{
+        window.location.reload();
+      },2000);
+    }
+  }
 
   return (
     <>
@@ -175,7 +327,11 @@ export default function linkDetails() {
                     <span className='socialLinkByUserName'>{linkUserName}</span>
                   </div>
                 </div>
-                
+              {userID && 
+                <div className="editHeaderBtnContainer">
+                  <button type="button" className="btn editHeaderBtn" onClick={handleEditHeaderShow}><i className='bx bxs-edit editHeaderIcon'></i></button>
+                </div>
+              }
               </div>
 
               {userID && 
@@ -199,7 +355,7 @@ export default function linkDetails() {
               <div className="socialLinkItemContainer">
                 {socialLinkList.length > 0 ? (
                   socialLinkList.map((linkDetails, index) => (
-                    <SocialLink key={index} userLinkTitle={linkDetails[0]} userLinkUrl={linkDetails[1]} userLinkUuid={linkDetails[2]} setToastText={setToastText}/>
+                    <SocialLink key={index} userLinkTitle={linkDetails[0]} userLinkUrl={linkDetails[1]} userLinkUuid={linkDetails[2]} setToastText={setToastText} setShowEditSocialModal={setShowEditSocialModal} setEditSocialTitle={setEditSocialTitle} setLinkSocialLink={setLinkSocialLink} setEditSocialID={setEditSocialID}/>
                   ))
                   ):(
                     <div className="listEmptyContainer">
@@ -238,9 +394,57 @@ export default function linkDetails() {
           </Modal.Footer>
       </Modal>
 
+      <Modal show={showEditHeaderModal} onHide={handleEditHeaderClose} centered>
+          <Modal.Header closeButton>
+          <Modal.Title>Update Link</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <form>
+                  <label htmlFor="createLink" className="form-label userCreateLinkNameLabel">Link name</label>
+                  <input type="text" className="form-control userCreateLinkInput" id="createLink" placeholder='Link name' value={linkEditTitle} onChange={(e)=>setLinkEditTitle(e.target.value)} required/>
+
+                  <label htmlFor="createLinkImage" className="form-label userCreateLinkNameLabel">Link image</label>
+                  <input type="file" className="form-control" id="createLinkImage" accept="image/png, image/gif, image/jpeg" onChange={(e) => handleFileChange(e)}/>
+              </form>
+              
+          </Modal.Body>
+          <Modal.Footer>
+          <Button variant="secondary" onClick={handleEditHeaderClose}>
+              Close
+          </Button>
+          <Button variant="primary" type='submit' onClick={handleEditHeader}>Save</Button>
+          </Modal.Footer>
+      </Modal>
+
+      <Modal show={showEditSocialModal} onHide={handleEditSocialClose} centered>
+          <Modal.Header closeButton>
+          <Modal.Title>Update Social</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <form>
+                  <label htmlFor="addLinkTitle" className="form-label userCreateLinkNameLabel">Link name</label> 
+                  <input type="text" className="form-control userCreateLinkInput" id="addLinkTitle" placeholder='Link name' value={editSocialTitle} onChange={(e)=>setEditSocialTitle(e.target.value)} required/>
+
+                  <label htmlFor="addLink" className="form-label userCreateLinkNameLabel">Social link</label> 
+                  <input type="text" className="form-control userCreateLinkInput" id="addLink" placeholder='https://www.sociallink.com/' value={editSocialLink} onChange={(e)=>setLinkSocialLink(e.target.value)} required/>
+              </form>
+                                    
+          </Modal.Body>
+          <Modal.Footer>
+          <Button variant="secondary" onClick={handleEditSocialClose}>
+              Close
+          </Button>
+          <Button variant="primary" type='submit' onClick={handleEditSocial}>Save</Button>
+          </Modal.Footer>
+      </Modal>
+
       { showToast &&
         <ToastContainer/>
       }
+      {showLoader &&
+        <Loader/>
+      }
+      
     </>
   )
 }

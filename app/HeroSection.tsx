@@ -253,7 +253,7 @@ export default function HeroSection() {
                     
                     <div className="dashboard">
                         <div className='container dashboard-inner'>
-                            <div className="userNavbarContainer">
+                            {/* <div className="userNavbarContainer">
                                 <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary navbar-light">
                                     <div className="container">
                                         <div className='searchBarDashboard'>
@@ -269,29 +269,12 @@ export default function HeroSection() {
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                         <span className="navbar-toggler-icon"></span>
                                         </button>
-                                        {/* <button classNameName="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                            
-                                        </button> */}
+                                        
                                         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                                             <ul className="navbar-nav">
                                            
                                                 <li className="nav-item">
-                                                {/* <div className="userAccount">
-                                                            
-                                                    <div className="userAccount-inner">
-                                                        <Dropdown className='userDropdownNavbar'>
-                                                            <div className="userImageContainerNavbar">
-                                                            <Dropdown.Toggle variant="btn" id="navbarDropdownMenuLink">
-                                                                <img className='userImageProfileNavbar' src={userImage} alt="" />
-                                                                <span className='userNameDashboardNavbar'>{userName}</span>
-                                                            </Dropdown.Toggle>
-                                                            </div>
-                                                            <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                                            <Dropdown.Item href="#">Logout</Dropdown.Item>
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
-                                                    </div>
-                                                    </div>  */}
+                                                
                                                     <div className="userAccount">
                                                         <div className="userAccount-inner">
                                                             <Dropdown className='userDropdownNavbar'>
@@ -315,7 +298,9 @@ export default function HeroSection() {
                                         
                                     </div>
                                 </nav>
-                            </div>
+                            </div> */}
+                            <Navbar/>
+
                             <div className="navbarDashboard">
                                     <div className='headerDashboard'>
                                         <span>Dashboard</span>

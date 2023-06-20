@@ -8,11 +8,15 @@ interface SocialLinkProps {
   userLinkTitle: string,
   userLinkUrl: string,
   userLinkUuid: string,
-  setToastText: Function
+  setToastText: Function,
+  setShowEditSocialModal: Function,
+  setEditSocialTitle: Function,
+  setLinkSocialLink: Function,
+  setEditSocialID: Function,
 
 } 
 
-export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, setToastText}:SocialLinkProps) {
+export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, setToastText, setShowEditSocialModal, setEditSocialTitle, setLinkSocialLink, setEditSocialID}:SocialLinkProps) {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [linkID, setLinkID] = useState('');
 
@@ -69,7 +73,7 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, se
                       </Dropdown.Toggle>
                   </div>
                   <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                      <Dropdown.Item href='#'>Edit</Dropdown.Item>
+                      <Dropdown.Item onClick={() => {setShowEditSocialModal(true); setEditSocialTitle(userLinkTitle); setLinkSocialLink(userLinkUrl); setEditSocialID(userLinkUuid)}}>Edit</Dropdown.Item>
                       <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>

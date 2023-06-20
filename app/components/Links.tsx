@@ -33,7 +33,6 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                         console.log('found '+ linkdateID);
                         remove(ref(db, `/UserLinks/${userID}/${linkdateID}`));
                         setToastText('Link successfully deleted!');
-                        
                     }
                 }
                 //   console.log(todo.plateNumber)

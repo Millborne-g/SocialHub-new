@@ -120,7 +120,7 @@ export default function page() {
                         console.log(localStorage.getItem('userID'));
                         // window.location.href = 'http://localhost:3000/';
                         window.open('http://localhost:3000/', '_self');
-                        setSignInLoader(false);
+                        // setSignInLoader(false);
                         
                     },3000);
                 } 

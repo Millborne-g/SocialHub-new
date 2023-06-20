@@ -81,37 +81,37 @@ export default function page() {
 
 
 
-  useEffect(() => {
-      // Check if the 'signedOut' key exists in sessionStorage
-      if (!sessionStorage.getItem('signedOut')) {
-        // Execute the signOut() function
-        sessionStorage.setItem('signedOut', 'true');
-        if(emailAddValue !== ''){
-          sessionStorage.setItem('emailAddValue', email);
-          signOut();
-        }
-      }
-      if (sessionStorage.getItem('emailAddValue')!== null) {
-      const storedEmail = sessionStorage.getItem('emailAddValue');
-        if (storedEmail !== null) {
-          setEmail(storedEmail);
-        }
-      }
+//   useEffect(() => {
+//       // Check if the 'signedOut' key exists in sessionStorage
+//       if (!sessionStorage.getItem('signedOut')) {
+//         // Execute the signOut() function
+//         sessionStorage.setItem('signedOut', 'true');
+//         if(emailAddValue !== ''){
+//           sessionStorage.setItem('emailAddValue', email);
+//           signOut();
+//         }
+//       }
+//       if (sessionStorage.getItem('emailAddValue')!== null) {
+//       const storedEmail = sessionStorage.getItem('emailAddValue');
+//         if (storedEmail !== null) {
+//           setEmail(storedEmail);
+//         }
+//       }
       
 
-  }, []);
+//   }, []);
 
-  useEffect(() => {
-    if(emailAddValue !== ''){
-      sessionStorage.setItem('emailAddValue', email);
-      const storedEmail = sessionStorage.getItem('emailAddValue');
-        if (storedEmail !== null) {
-          setEmail(storedEmail);
-        }
-    }else{
-      sessionStorage.setItem('emailAddValue', '');
-    }
-}, [localStorage.getItem('userID')]);
+//   useEffect(() => {
+//     if(emailAddValue !== ''){
+//       sessionStorage.setItem('emailAddValue', email);
+//       const storedEmail = sessionStorage.getItem('emailAddValue');
+//         if (storedEmail !== null) {
+//           setEmail(storedEmail);
+//         }
+//     }else{
+//       sessionStorage.setItem('emailAddValue', '');
+//     }
+// }, [localStorage.getItem('userID')]);
 
   useEffect(() =>{
     setName(fName+' '+lName);
