@@ -11,11 +11,13 @@ interface LinksProps {
   userFormattedDate: string;
   userImageLinkURL: string;
   userLinkUuid: string;
-  setToastText: Function
+  setToastText: Function;
+  setShowToast: Function;
 }
 
-export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid, setToastText}: LinksProps) {
+export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid, setToastText, setShowToast}: LinksProps) {
     const [userID, setUserID] = useState(localStorage.getItem('userID'));
+    const [copyClicked, setCopyClicked] = useState(false);
     const handleDelete = () => {
         remove(ref(db, `/Links/${userLinkUuid}`));
 
@@ -33,6 +35,7 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                         console.log('found '+ linkdateID);
                         remove(ref(db, `/UserLinks/${userID}/${linkdateID}`));
                         setToastText('Link successfully deleted!');
+                        setShowToast(true);
                     }
                 }
                 //   console.log(todo.plateNumber)
@@ -41,6 +44,21 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
             }
         });
     };
+
+    const handleCopyBtn =() =>{
+        try {
+            navigator.clipboard.writeText(`http://localhost:3000/${userLinkUuid}`);
+            console.log('Content copied successfully!');
+            setCopyClicked(true);
+            setToastText('Link copied!');
+            setShowToast(true);
+            setTimeout(() =>{
+                setCopyClicked(false);
+            },5000)
+          } catch (error) {
+            console.error('Failed to copy content:', error);
+          }
+    }
   return (
     <>
         <div className="userLinksContaner">
@@ -59,7 +77,14 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                 <div className="userLinksContanerRight">
                     <div className="userLinkBtnContainer">
                         <div className="userLinkBtnContainer-inner">
-                            <button type="button" className="btn userCopyBtn"> <span className='userLinkBtnIcon'><i className='bx bx-copy-alt' ></i></span> </button>
+                            <button type="button" className="btn userCopyBtn" onClick={()=>handleCopyBtn()}> 
+                                <span className='userLinkBtnIcon'>
+                                    {copyClicked ?
+                                        <i className='bx bxs-checkbox-checked'></i> :
+                                        <i className='bx bx-copy-alt'></i>
+                                    }
+                                </span> 
+                            </button>
                            
                             <Dropdown className='userDropdownLinks'>
                                 <div className="userDotsContainer">

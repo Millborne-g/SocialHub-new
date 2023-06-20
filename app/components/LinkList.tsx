@@ -7,9 +7,10 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 interface props {
   setListCount: Function
   setToastText: Function
+  setShowToast: Function
 }
 
-export default function LinkList({setListCount, setToastText}:props) {
+export default function LinkList({setListCount, setToastText, setShowToast}:props) {
   const [userID, setUserID] = useState(localStorage.getItem('userID'));
   const [userLinkList, setUserLinkList] = useState<any[]>([]);
 
@@ -57,6 +58,7 @@ export default function LinkList({setListCount, setToastText}:props) {
           userImageLinkURL={linkDetails[2]}
           userLinkUuid={linkDetails[3]}
           setToastText={setToastText}
+          setShowToast={setShowToast}
         />
       ))
     ) : (

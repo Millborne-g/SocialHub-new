@@ -54,6 +54,8 @@ export default function linkDetails() {
 
   const customToastId = "custom-id-notify";
 
+  const [linkEmpty, setLinkEmpty] = useState(false);
+
   useEffect(() => {
     document.title = linkTitle;
   }, [linkTitle]);
@@ -71,9 +73,12 @@ export default function linkDetails() {
   });
 
   useEffect(() => {
-    if (showToast) {
+    if (showToast && toastText) {
         notifySuccess();
         // setClickSignIn(false);
+        setTimeout(() =>{
+          setToastText('');
+      },5000)
     }
   }, [toastText]);
 
@@ -184,6 +189,8 @@ export default function linkDetails() {
               }
             })
 
+        } else{
+          setLinkEmpty(true)
         }
       });
     }
@@ -323,7 +330,10 @@ export default function linkDetails() {
   // },[socialLinkList])
 
   return (
-    <>
+    <> 
+      {linkEmpty ? 
+      '' :
+      <>
       <Navbar />
       <div className="socialLinkContainer container">
           <div className="socialLinkContainer-inner">
@@ -455,6 +465,13 @@ export default function linkDetails() {
       {showLoader &&
         <Loader/>
       }
+      </>
+        
+
+      
+        
+      }
+
       
     </>
   )

@@ -62,9 +62,13 @@ export default function HeroSection() {
     },[emailAdd])
 
     useEffect(() => {
-        if (showToast) {
+        if (showToast && toastText) {
             notifySuccess();
             // setClickSignIn(false);
+
+            setTimeout(() =>{
+                setToastText('');
+            },5000)
         }
     }, [toastText]);
 
@@ -164,8 +168,9 @@ export default function HeroSection() {
             setShowLoader(false)
             setLinkTitle('')
             setImageLinkURL('')
-            setShowToast(true);
+            
             setToastText('Link successfully created!');
+            setShowToast(true);
         }
         
     },[imageLinkURL])
@@ -381,7 +386,7 @@ export default function HeroSection() {
                                 <div className='userDashboardDivider'></div>
 
                                 <div className="userLinksContanerDashboard">
-                                    <LinkList setListCount={setListCount} setToastText={setToastText}/>
+                                    <LinkList setListCount={setListCount} setToastText={setToastText} setShowToast={setShowToast}/>
                                 </div>
 
                                 <Modal show={showCreateModal} onHide={handleClose} centered>
@@ -392,11 +397,9 @@ export default function HeroSection() {
                                         <form>
                                             <label htmlFor="createLink" className="form-label userCreateLinkNameLabel">Link name</label>
                                             <input type="text" className="form-control userCreateLinkInput" id="createLink" placeholder='Link name' value={linkTitle} onChange={(e)=>setLinkTitle(e.target.value)} required/>
-
                                             <label htmlFor="createLinkImage" className="form-label userCreateLinkNameLabel">Link image</label>
                                             <input type="file" className="form-control" id="createLinkImage" accept="image/png, image/gif, image/jpeg" onChange={(e) => handleFileChange(e)}/>
                                         </form>
-                                        
                                     </Modal.Body>
                                     <Modal.Footer>
                                     <Button variant="secondary" onClick={handleClose}>

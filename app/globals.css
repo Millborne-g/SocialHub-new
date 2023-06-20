@@ -880,7 +880,7 @@ a {
   color: #000000;
 
   display: inline-block;
-  width: 300px; /* Adjust the width as per your requirement */
+  width: 250px; /* Adjust the width as per your requirement */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
