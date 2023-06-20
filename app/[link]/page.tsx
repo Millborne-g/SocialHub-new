@@ -175,8 +175,13 @@ export default function linkDetails() {
               // setUserLinkList([]);
               const data = snapshot.val();
               if (data !== null) {
-                setLinkUserImage(data.imageLink);
-                setLinkUserName(data.name)
+                
+                setLinkUserName(data.name);
+                if(!data.imageLink){
+                  setLinkUserImage('http://drive.google.com/uc?export=view&id=138V3HgyL1l8Bk1iWGxAj4BbphM_Y45rO');
+                } else{
+                  setLinkUserImage(data.imageLink);
+                }
             }});
 
             onValue(ref(db, `/Links/${linkID}/socialLinks`), (snapshot) => {

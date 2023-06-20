@@ -52,7 +52,13 @@ export default function Navbar() {
                     let userImage = data.imageLink;
 
                     setUserName(userFullName);
-                    setUserImage(userImage);
+                    
+
+                    if(!userImage){
+                      setUserImage('http://drive.google.com/uc?export=view&id=138V3HgyL1l8Bk1iWGxAj4BbphM_Y45rO');
+                    } else{
+                      setUserImage(userImage);
+                    }
               }
             });
         }
