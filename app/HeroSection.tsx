@@ -205,6 +205,8 @@ export default function HeroSection() {
                 .catch((error) => {
                     console.error('Error uploading image:', error);
                 });
+        } else{
+            setImageLinkURL('http://drive.google.com/uc?export=view&id=1ByrmsfllxPY095bp3B2XULp1rXvaed27');
         }
 
         // alert('Saved to Database');
