@@ -109,6 +109,10 @@ export default function socialLink({userLinkTitle, userLinkUrl, userLinkUuid, se
               </Dropdown>
               }
             </div>
+
+            <a className="visitIcon" href={userLinkUrl} target='_blank'>
+              <i className='bx bx-link-external'></i>
+            </a>
             
             
           </div>
