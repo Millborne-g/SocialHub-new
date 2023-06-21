@@ -209,5 +209,16 @@
 
   /* confetti */
   
-  
+  /* mobile */
+@media screen and (max-width: 580px) {
+  .signUpContainer-inner{
+    width: 350px;
+  }
+
+  .createAnAccount{
+    font-size: 25px;
+    line-height: 100%;
+  }
+}
+
   

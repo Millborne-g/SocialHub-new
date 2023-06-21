@@ -257,7 +257,7 @@ a {
 .buttonContainer-inner{
   background-color: #0066FF;
   border-radius: 5px;
-  padding: 1%;
+  padding: 1.5%;
   height: 60px;
 }
 
@@ -313,7 +313,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
+.heroImage{
+  height: 600px;
 }
 
 /* sidebar */
@@ -1021,3 +1024,80 @@ a {
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
 }
  /* end Loader */
+
+
+ /* small screen */
+@media screen and (max-width: 1200px){
+  .heroImageContainer{
+    display: none;
+  }
+
+  .heroHeadlinesInner{
+    text-align: center;
+  }
+
+  .buttonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #0bf832; */
+    /* width: 100%; */
+    width: 100%;
+  }
+
+  .buttonContainer-inner{
+    width: 100%;
+  }
+}
+
+/* tablet */
+@media screen and (max-width: 995px) {
+  .navloginContiner{
+    display: none ;
+  }
+}
+
+/* mobile */
+@media screen and (max-width: 580px) {
+  .userNameDashboardNavbar{
+    display: none;
+  }
+
+  .headline{
+    font-size: 30px;
+    line-height: 39px;
+    margin-bottom: 5px;
+  }
+
+  .subHeadline{
+    font-size: 15px;
+    line-height: 21px;
+    margin-bottom: 20px;
+  }
+
+  .userLinksContaner{
+    height: 120px;
+  }
+
+  .linkImageContainer{
+    width: 120px;
+    height: 100%;
+  }
+
+  .userLinkTitleText{
+    font-size: 20px;
+    line-height: 30px;
+    width: 140px; 
+  }
+
+  .userLinkTitleTextDate{
+    font-size: 16px;
+    line-height: 19px;
+
+    display: inline-block;
+    width: 140px; /* Adjust the width as per your requirement */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

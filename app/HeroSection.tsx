@@ -228,23 +228,25 @@ export default function HeroSection() {
                                         <span className='headline'>Your One-Stop Link Storage Solution: <span className='headlineHighlight'>Accessible</span> and <span className='headlineHighlight'>Shareable</span></span>
                                         <span className='subHeadline'>Elevate Your Link Management Experience - Store, Share, and Access Your Links with Our Cutting-Edge Storage Solution!</span>
                                         <div className='buttonContainer'>
-                                            <form className="input-group mb-3 buttonContainer-inner" onSubmit={(e) => {e.preventDefault(); setEmailAdd(emailAdd); window.location.href = '/signup'; }}>
-                                                <input type="text" className="form-control emailInput" placeholder="Enter your email..." aria-label="Recipient's username" aria-describedby="button-addon2" value={emailAdd} onChange={(e) => setEmailAdd(e.target.value)}/>
-                                                <Link className="emailInputBtn" href="/signup"><span> Sign up <FontAwesomeIcon className='arrowIcon' icon={faArrowRight} /></span></Link>
-                                            </form>
+                                            <div>
+                                                <form className="input-group mb-3 buttonContainer-inner" onSubmit={(e) => {e.preventDefault(); setEmailAdd(emailAdd); window.location.href = '/signup'; }}>
+                                                    <input type="text" className="form-control emailInput" placeholder="Enter your email..." aria-label="Recipient's username" aria-describedby="button-addon2" value={emailAdd} onChange={(e) => setEmailAdd(e.target.value)}/>
+                                                    <Link className="emailInputBtn" href="/signup"><span> Sign up <FontAwesomeIcon className='arrowIcon' icon={faArrowRight} /></span></Link>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col heroImageContainer">
                                     <div className="heroImageContainerInner">
-                                    <Image
+                                    {/* <Image
                                         src={heroImage.src}
                                         width={650}
                                         height={650}
                                         alt="Picture of the author"
                                         priority
-                                    />
-                                        {/* <img src={heroImage.src} /> */}
+                                    /> */}
+                                        <img className='heroImage' src={heroImage.src} />
                                     </div>
                                 </div>
                             </div>
@@ -252,7 +254,7 @@ export default function HeroSection() {
                         </div>
 
                         <div className='footer'>
-                            <span> © 2023 SocialHub | <a className='portfolioLink' href="https://millborneportfolio.vercel.app/" target="_blank">Millborne Galamiton</a> All rights reserved.</span>
+                            <span> © 2023 SocialHub | <a className='portfolioLink' href="https://millborneportfolio.vercel.app/" target="_blank">Millborne Galamiton.</a> All rights reserved.</span>
                         </div>
                     </section>
                 </> :

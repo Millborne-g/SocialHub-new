@@ -1,5 +1,4 @@
 .socialLinkContainer{
-    margin-top: 7%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -8,6 +7,8 @@
 }
 .socialLinkContainer-inner{
     width: 550px;
+    margin-top: 100px;
+
 }
 
 .socialLinkHeader{
@@ -280,3 +281,49 @@
 }
 
 /* end social item */
+
+
+@media screen and (max-width: 770px) {
+    .socialLinkItemContainer{
+        justify-content: space-between; 
+    }
+
+    .socialLinkItem{
+        width: 47%;
+    }
+}
+
+/* mobile */
+@media screen and (max-width: 580px) {
+    .socialLinkContainer-inner{
+        width: 100%;
+    }
+
+    .socialLinkHeader{
+        /* background-color: aqua; */
+    }
+
+    .socialLinkImageContainer{
+        width: 100px;
+        height: 100px;
+    }
+
+    .socialLinkName{
+        font-size: 25px;
+        line-height: 35px;
+        width: 190px; 
+    }
+
+    
+}
+
+@media screen and (max-width: 360px) {
+    .socialLinkItem{
+        width: 100%;
+    }
+
+    .socialLinkItemLink{
+        
+        width: 190px; /* Adjust the width as per your requirement */
+    }
+}

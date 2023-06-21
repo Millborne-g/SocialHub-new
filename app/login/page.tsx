@@ -239,11 +239,19 @@ export default function page() {
   return (
     <>
         <header>
-            <div className="container navbarLogin">
-                <a className="navbar-brand justify-content-start" href="#">
+            {/* <div className="container navbarLogin">
+                <a className="justify-content-start" href="#">
                     <img className='logoImg' src={logo.src} alt="" />
                 </a>
-            </div>
+            </div> */}
+            <nav className="navbarLogin">
+                <div className="container">
+                    <a className="navbar-brand" href="https://social-hub-new.vercel.app/">
+                        <img className='logoImg' src={logo.src} alt="" />
+                        {/* <span className='logoName'>SocialHub</span>  */}
+                    </a>
+                </div>
+            </nav>
         </header>
 
         <div className='loginCointainer container'>

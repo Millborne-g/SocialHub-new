@@ -73,13 +73,11 @@ export default function Navbar() {
                     <img className='logoImg' src={logo.src} alt="" />
                     <span className='logoName'>SocialHub</span> 
                 </a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon"></span>
-                </button>
+                
                 {/* <button classNameName="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     
                 </button> */}
-                <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <div className="justify-content-end" id="navbarSupportedContent">
                     <ul className="navbar-nav">
                       {userID ? 
                         <li className="nav-item">
@@ -102,7 +100,7 @@ export default function Navbar() {
                           </li>
                         :
                         <>
-                          <li className="nav-item">
+                          <li className="nav-item navloginContiner">
                             <span className="nav-link"><Link className='navlogin' href="/login">Log in</Link></span>
                           </li>
                           <li className="nav-item">

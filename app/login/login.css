@@ -6,6 +6,7 @@
 .navbarLogin{
     padding: 40px 0;
     margin-bottom: 55px;
+    background-color: #ffff;
 }
 
 .logoImg{
@@ -53,9 +54,10 @@
   }
 
   .textFields{
-    width: 350px;
+    width: 100%;
     margin-bottom: 13px;
   }
+  
 
   .logInPageBtn{
     width: 100%;
@@ -141,3 +143,20 @@
     border-radius: 10px;
     box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
   }
+
+    /* mobile */
+@media screen and (max-width: 580px) {
+  .logoImg{
+    height: 40px;
+  }
+
+  .loginContainerText{
+    font-size: 25px;
+    line-height: 100%;
+  }
+
+  .logInCard{
+    width: 100%;
+    padding: 40px 5px;
+  }
+}
