@@ -615,7 +615,7 @@ a {
   position: absolute;
   bottom: 0;
   padding: 0.8% 0;
-  text-align: center;
+  
   /* background-color: #0066FF; */
 }
 
@@ -625,6 +625,7 @@ a {
   font-weight: 500;
   font-size: 13px;
   color: #000000;
+  text-align: center;
 }
 
 .footer span a{
