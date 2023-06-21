@@ -212,12 +212,14 @@
   /* mobile */
 @media screen and (max-width: 580px) {
   .signUpContainer-inner{
-    width: 350px;
+    width: 100%;
+    /* background-color: #44C4A1; */
   }
 
   .createAnAccount{
-    font-size: 25px;
+    font-size: 22px;
     line-height: 100%;
+    text-align: center;
   }
 }
 
