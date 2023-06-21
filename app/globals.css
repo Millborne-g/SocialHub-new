@@ -615,6 +615,7 @@ a {
   position: absolute;
   bottom: 0;
   padding: 0.8% 0;
+  text-align: center;
   /* background-color: #0066FF; */
 }
 
@@ -1105,7 +1106,7 @@ a {
   }
 
   .footer span{
-    font-size: 8px;
+    font-size: 10px;
   }
   
   .footer span a{
