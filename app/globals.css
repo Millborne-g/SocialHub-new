@@ -1057,13 +1057,15 @@ a {
 
 /* tablet */
 @media screen and (max-width: 995px) {
-  .navloginContiner{
-    display: none ;
-  }
+
 }
 
 /* mobile */
 @media screen and (max-width: 580px) {
+  .navloginContiner{
+    display: none ;
+  }
+  
   .userNameDashboardNavbar{
     display: none;
   }
