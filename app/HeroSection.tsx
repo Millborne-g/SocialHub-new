@@ -219,7 +219,7 @@ export default function HeroSection() {
         <>
             {!userID ?
                 <>
-                    <Navbar/>
+                    {/* <Navbar/> */}
                     <section className='hero'>
                         <div className="container hero-inner">
                             <div className="row headline-inner-row">
@@ -265,7 +265,7 @@ export default function HeroSection() {
                             
                         </div>
                     </section>   */}
-                    <Navbar/>
+                    {/* <Navbar/> */}
                     <div className="container dashboard">
                         <div className='dashboard-inner'>
                             {/* <div className="userNavbarContainer">
