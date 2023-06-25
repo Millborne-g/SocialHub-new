@@ -380,7 +380,7 @@ export default function page() {
   return (
     <>
       <div className='signUpContainer'>
-        <div className="signUpContainer-inner container">
+        <div className="signUpContainer-inner">
         
 
           <div className='logoSignup-container'>
