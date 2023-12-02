@@ -6,6 +6,7 @@ import { Dropdown } from 'react-bootstrap';
 import {db,storage} from '../../firebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { connectStorageEmulator } from 'firebase/storage';
+import { useRouter } from 'next/navigation'
 interface LinksProps {
   userLinkTitle: string;
   userFormattedDate: string;
@@ -16,6 +17,7 @@ interface LinksProps {
 }
 
 export default function Links({ userLinkTitle, userFormattedDate, userImageLinkURL , userLinkUuid, setToastText, setShowToast}: LinksProps) {
+    const router = useRouter();
     const [userID, setUserID] = useState(localStorage.getItem('userID'));
     const [copyClicked, setCopyClicked] = useState(false);
     const handleDelete = () => {
@@ -93,7 +95,9 @@ export default function Links({ userLinkTitle, userFormattedDate, userImageLinkU
                                     </Dropdown.Toggle>
                                 </div>
                                 <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
-                                    <Dropdown.Item href={`/${userLinkUuid}`}>Edit</Dropdown.Item>
+                                    <Dropdown.Item 
+                                    onClick={() => router.push(`/${userLinkUuid}`)} //href={`/${userLinkUuid}`}
+                                    >Edit</Dropdown.Item>
                                     <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

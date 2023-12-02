@@ -16,7 +16,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Loader from '../components/Loader';
 
+import { usePathname, useSearchParams } from 'next/navigation'
+
 export default function linkDetails() {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [userID, setUserID] = useState('');
   const [userName, setUserName] = useState('');
   const [userImage, setUserImage] = useState('');
@@ -142,13 +146,21 @@ export default function linkDetails() {
     
   }
 
-  useEffect(() =>{
-    var currentURL = window.location.href;
-    var urlParts = currentURL.split('/');
-    var lastItem = urlParts[urlParts.length - 1];
-    console.log(lastItem);
-    setLinkID(lastItem);
-  },[]);
+  // useEffect(() =>{
+  //   var currentURL = window.location.href;
+  //   var urlParts = currentURL.split('/');
+  //   var lastItem = urlParts[urlParts.length - 1];
+  //   console.log(lastItem);
+  //   setLinkID(lastItem);
+  // },[]);
+
+  useEffect(() => {
+    const url = `${pathname}`
+    const originalString = url;
+    const modifiedString = originalString.replace('/', ''); 
+    console.log(modifiedString)
+    setLinkID(modifiedString);
+  }, [pathname, searchParams])
 
   useEffect(() =>{
     if(linkID){
