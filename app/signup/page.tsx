@@ -23,6 +23,7 @@ type ResponseType = {
 };
 
 export default function page() {
+  
   useEffect(() => {
     document.title = 'SocialHub | Sign up';
   }, []);

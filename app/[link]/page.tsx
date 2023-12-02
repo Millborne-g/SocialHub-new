@@ -161,6 +161,7 @@ export default function linkDetails() {
     console.log(modifiedString)
     setLinkID(modifiedString);
   }, [pathname, searchParams])
+  
 
   useEffect(() =>{
     if(linkID){
