@@ -160,8 +160,8 @@ export default function linkDetails() {
     const modifiedString = originalString.replace('/', ''); 
     console.log(modifiedString)
     setLinkID(modifiedString);
-  }, [pathname, searchParams])
-  
+  }, [])
+
 
   useEffect(() =>{
     if(linkID){
